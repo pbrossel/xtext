@@ -368,6 +368,14 @@ class XbaseFormatter extends XtypeFormatter {
 		val close = expr.regionFor.keyword("}")
 		if (expr.eContainer === null)
 			expr.surround[noSpace]
+			// ##### 
+			else {
+				if (expr.eContainer instanceof XIfExpression && (expr.eContainer as XIfExpression).conditionalExpression) {
+					expr.surround[indent]
+				}
+			}
+			
+		
 		if (open !== null && close !== null) {
 			if (expr.isSingleLineBlock) {
 				expr.formatConditionally(

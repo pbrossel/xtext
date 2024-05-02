@@ -247,9 +247,21 @@ class XtendFormatter extends XbaseWithAnnotationsFormatter {
 	}
 	
 	override dispatch void format(XIfExpression expr, extension IFormattableDocument format) {
+	
+//	val x = format.request.getTextRegionAccess().getRewriter().renderToString(format.renderToTextReplacements)
+//	
+	println  (expr)
+	println  (format)
+			
+
+	
+	
 		if (!expr.conditionalExpression) {
 			super._format(expr, format)
 		} else {
+			
+	
+			
 			if (expr.eContainer instanceof XVariableDeclaration) {
 				expr.surround[indent]
 			}
@@ -257,7 +269,7 @@ class XtendFormatter extends XbaseWithAnnotationsFormatter {
 			if (expr.then instanceof XBlockExpression || multiline)
 				expr.regionFor.keyword("?").prepend[newLine].surround[indent].append[oneSpace]
 			else
-				expr.regionFor.keyword("?").surround[oneSpace]
+				expr.regionFor.keyword("?").surround[ oneSpace]
 			expr.^if.format
 			// missing paranthesis around the condition cannot be added
 			if (expr.^else === null) {
@@ -274,6 +286,7 @@ class XtendFormatter extends XbaseWithAnnotationsFormatter {
 				}
 			}
 		}
+		
 	}
 
 	override dispatch void format(JvmFormalParameter expr, extension IFormattableDocument format) {
@@ -314,6 +327,9 @@ class XtendFormatter extends XbaseWithAnnotationsFormatter {
 		} else if (forceMultiline || expr.previousHiddenRegion.isMultiline) {
 			if (!(expr.eContainer instanceof XIfExpression && (expr.eContainer as XIfExpression).conditionalExpression))
 				expr.prepend[newLine].surround[indent].append[newLine]
+				else
+				// #### wanna indent before '?'
+				expr.surround[indent].append[newLine]
 		} else {
 			expr.surround[oneSpace]
 		}

@@ -746,17 +746,24 @@ public class XbaseFormatter extends XtypeFormatter {
         it.noSpace();
       };
       format.<XBlockExpression>surround(expr, _function);
+    } else {
+      if (((expr.eContainer() instanceof XIfExpression) && ((XIfExpression) expr.eContainer()).isConditionalExpression())) {
+        final Procedure1<IHiddenRegionFormatter> _function_1 = (IHiddenRegionFormatter it) -> {
+          it.indent();
+        };
+        format.<XBlockExpression>surround(expr, _function_1);
+      }
     }
     if (((open != null) && (close != null))) {
       boolean _isSingleLineBlock = this.isSingleLineBlock(expr);
       if (_isSingleLineBlock) {
-        final ISubFormatter _function_1 = (IFormattableSubDocument f) -> {
+        final ISubFormatter _function_2 = (IFormattableSubDocument f) -> {
           this.formatExpressionsSingleline(expr.getExpressions(), open, close, f.requireFitsInLine());
         };
-        final ISubFormatter _function_2 = (IFormattableSubDocument f) -> {
+        final ISubFormatter _function_3 = (IFormattableSubDocument f) -> {
           this.formatExpressionsMultiline(expr.getExpressions(), open, close, f);
         };
-        format.formatConditionally(expr, _function_1, _function_2);
+        format.formatConditionally(expr, _function_2, _function_3);
       } else {
         this.formatExpressionsMultiline(expr.getExpressions(), open, close, format);
       }

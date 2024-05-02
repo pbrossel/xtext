@@ -184,6 +184,7 @@ public abstract class FormattableDocument implements IFormattableDocument {
 	@Override
 	public <T> T format(T obj) {
 		AbstractFormatter2 formatter = getFormatter();
+		// #####
 		if (formatter.shouldFormat(obj, this)) {
 			try {
 				formatter.format(obj, this);

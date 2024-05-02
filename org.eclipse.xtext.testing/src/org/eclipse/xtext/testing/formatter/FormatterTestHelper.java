@@ -115,6 +115,8 @@ public class FormatterTestHelper {
 		}
 		String formatted = request.getTextRegionAccess().getRewriter().renderToString(replacements);
 
+		System.out.printf("@@@\n%s\n@@@" ,formatted.replace("\t", "    "));
+		
 		Assert.assertEquals(req.getExpectationOrToBeFormatted().toString(), formatted);
 
 		// TODO: assert formatting a second time only produces identity replacements

@@ -71,6 +71,7 @@ import org.eclipse.xtext.xbase.annotations.formatting2.XbaseWithAnnotationsForma
 import org.eclipse.xtext.xbase.annotations.xAnnotations.XAnnotation;
 import org.eclipse.xtext.xbase.formatting2.XbaseFormatterPreferenceKeys;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
@@ -500,6 +501,8 @@ public class XtendFormatter extends XbaseWithAnnotationsFormatter {
 
   @Override
   protected void _format(final XIfExpression expr, @Extension final IFormattableDocument format) {
+    InputOutput.<XIfExpression>println(expr);
+    InputOutput.<IFormattableDocument>println(format);
     boolean _isConditionalExpression = expr.isConditionalExpression();
     boolean _not = (!_isConditionalExpression);
     if (_not) {
@@ -620,12 +623,20 @@ public class XtendFormatter extends XbaseWithAnnotationsFormatter {
             it.newLine();
           };
           doc.<XExpression>append(doc.<XExpression>surround(doc.<XExpression>prepend(expr, _function), _function_1), _function_2);
+        } else {
+          final Procedure1<IHiddenRegionFormatter> _function_3 = (IHiddenRegionFormatter it) -> {
+            it.indent();
+          };
+          final Procedure1<IHiddenRegionFormatter> _function_4 = (IHiddenRegionFormatter it) -> {
+            it.newLine();
+          };
+          doc.<XExpression>append(doc.<XExpression>surround(expr, _function_3), _function_4);
         }
       } else {
-        final Procedure1<IHiddenRegionFormatter> _function_3 = (IHiddenRegionFormatter it) -> {
+        final Procedure1<IHiddenRegionFormatter> _function_5 = (IHiddenRegionFormatter it) -> {
           it.oneSpace();
         };
-        doc.<XExpression>surround(expr, _function_3);
+        doc.<XExpression>surround(expr, _function_5);
       }
     }
     doc.<XExpression>format(expr);
