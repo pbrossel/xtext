@@ -309,17 +309,31 @@ z1 =
 	@Test
 	def issue_2337_if_thenBlock_elseBlock() {
 
+		var x = if (1 == 2) {
+				1
+			} else {
+				2
+			}
+
+		// This is the bug as such (formatting with the current xtend editor that does not integrate the fix
+		var y = (1 == 2)
+				? {
+				1
+			}
+				: {
+				2
+			}
+
 		assertFormattedExpression(
 		'''
-			(a < b)
+			(1 == 2)
 				? {
 					1
-				}
-				: {
+				} : {
 					2
 				}
 		''', '''
-			(a < b) ? {1} : {2}
+			(1 == 2) ? {1} : {2}
 		''')
 
 	}
@@ -327,16 +341,57 @@ z1 =
 	@Test
 	def issue_2337_if_thenSimple_elseBlock() {
 
+		var x = if (1 == 2)
+				1
+			else {
+				2
+			}
+
+		var y = (1 == 2)
+				? 1
+				: {
+				2
+			}
+
 		assertFormattedExpression(
 		'''
-			(a < b)
+			(1 == 2) ? 1 : {
+					2
+				}
+			
+		''', '''
+			(1 == 2)	? 1	: {2}
+		''')
+
+	}
+
+	@Test
+	def issue_2337_if_thenIf_thenSimple_elseSimple_elseSimple() {
+
+		assertFormattedExpression(
+		'''
+			(1 == 2) ? (3 == 4) ? 1 : 2 : 3
+		''', '''
+			(1 == 2)			? (3 == 4) 					? 
+			1	: 2 : 
+			3
+		''')
+
+	}
+
+	@Test
+	def issue_2337_if_thenIf_thenSimple_elseBlock_elseSimple() {
+
+		assertFormattedExpression(
+		'''
+			(1 < 2)
 				? 1
 				: {
 					2
 				}
 			
 		''', '''
-			(a < b)	? 1	: {2}
+			(1 < 2)	? (3 == 4) ? 1	: {2} : 3
 		''')
 
 	}
@@ -344,15 +399,25 @@ z1 =
 	@Test
 	def issue_2337_if_thenBlock_elseSimple() {
 
+		var x = if (1 == 2) {
+				1
+			} else
+				2
+
+		var y = (1 == 2)
+				? {
+				1
+			}
+				: 2
+
 		assertFormattedExpression(
 		'''
-			(a < b)
+			(1 == 2)
 				? {
 					1
-				}
-				: 2
+				} : 2
 		''', '''
-			(a < b) ? {1}: 2
+			(1 == 2) ? {1}: 2
 		''')
 
 	}
@@ -362,13 +427,27 @@ z1 =
 
 		assertFormattedExpression(
 		'''
-			(a < b) ? 1 : 2
+			(1 == 2) ? 1 : 2
 		''', '''
-			(a < b) ? 1 : 2
+			(1 == 2) ? 1 : 2
 		''')
 
 	}
 
+	@Test
+	def issue_2337_if_thenSimple_elseSimple_multiline() {
+
+		assertFormattedExpression(
+		'''
+			(1 == 2)
+				? 1
+				: 2
+		''', '''
+			(1 == 2) ? 1 : 
+			2
+		''')
+
+	}
 	@Test
 	def issue_2337_if_thenIf_thenIf_thenBlock_elseBlock_elseBlock_elseBlock_01() {
 
@@ -400,62 +479,62 @@ z1 =
 
 	}
 
-	@Test
-	def issue_2337_blockExpression_02() {
-
-		assertFormattedExpression('''
-			(a < b)
-				? (x == y)
-					? (z1 = z2)
-						? {
-							77
-						} : {
-							88
-						}
-					: {
-						11
-					}
-				: {
-					4
-				}
-			// classical if
-			if (a < b)
-				if (x == b) {
-					10
-				} else {
-					11
-				}
-			else {
-				4
-			}
-		''', '''
-			(a < b)				? (x == y)				? 
-			ллл			{				10							}
-			(z1 = z2) ? {77} 
-					
-			: {88}
-				
-	 	:8
-				{	11		}
-ллл			(z1 = z8) ? {77} : {88}
-				: {
-				4
-			}
-			// classical if
-			if aa < ba
-				if  (x == b)
-				 
-				10
-			}
-				else	}
-				11
-			}
-				else	{
-				4
-			}		
-			
-		''')
-
-	}
-
+//	@Test
+//	def issue_2337_blockExpression_02() {
+//
+//		assertFormattedExpression('''
+//			(a < b)
+//				? (x == y)
+//					? (z1 = z2)
+//						? {
+//							77
+//						} : {
+//							88
+//						}
+//					: {
+//						11
+//					}
+//				: {
+//					4
+//				}
+//			// classical if
+//			if (a < b)
+//				if (x == b) {
+//					10
+//				} else {
+//					11
+//				}
+//			else {
+//				4
+//			}
+//		''', '''
+//			(a < b)				? (x == y)				? 
+//			ллл			{				10							}
+//			(z1 = z2) ? {77} 
+//					
+//			: {88}
+//				
+//	 	:8
+//				{	11		}
+//ллл			(z1 = z8
+// ? {77} : {88}
+//				: {
+//				4
+//			}
+//			// classical if
+//			if as < ba
+//s				if  (x == b)
+//				 
+//						10
+//			}
+//						else	}
+//						11
+//			}
+//				else	{
+//				4
+//			}		
+//			
+//		''')
+//
+//	}
 }

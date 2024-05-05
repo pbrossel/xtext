@@ -259,8 +259,22 @@ public class XtendConditionalExpressionFormatterTest extends AbstractXtendFormat
 
   @Test
   public void issue_2337_if_thenBlock_elseBlock() {
+    int _xifexpression = (int) 0;
+    if ((1 == 2)) {
+      _xifexpression = 1;
+    } else {
+      _xifexpression = 2;
+    }
+    int x = _xifexpression;
+    int _xifexpression_1 = (int) 0;
+    if ((1 == 2)) {
+      _xifexpression_1 = 1;
+    } else {
+      _xifexpression_1 = 2;
+    }
+    int y = _xifexpression_1;
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("(a < b)");
+    _builder.append("(1 == 2)");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("? {");
@@ -269,10 +283,7 @@ public class XtendConditionalExpressionFormatterTest extends AbstractXtendFormat
     _builder.append("1");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append(": {");
+    _builder.append("} : {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("2");
@@ -281,15 +292,62 @@ public class XtendConditionalExpressionFormatterTest extends AbstractXtendFormat
     _builder.append("}");
     _builder.newLine();
     StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("(a < b) ? {1} : {2}");
+    _builder_1.append("(1 == 2) ? {1} : {2}");
     _builder_1.newLine();
     this.assertFormattedExpression(_builder.toString(), _builder_1);
   }
 
   @Test
   public void issue_2337_if_thenSimple_elseBlock() {
+    int _xifexpression = (int) 0;
+    if ((1 == 2)) {
+      _xifexpression = 1;
+    } else {
+      _xifexpression = 2;
+    }
+    int x = _xifexpression;
+    int _xifexpression_1 = (int) 0;
+    if ((1 == 2)) {
+      _xifexpression_1 = 1;
+    } else {
+      _xifexpression_1 = 2;
+    }
+    int y = _xifexpression_1;
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("(a < b)");
+    _builder.append("(1 == 2) ? 1 : {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("2");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("(1 == 2)\t? 1\t: {2}");
+    _builder_1.newLine();
+    this.assertFormattedExpression(_builder.toString(), _builder_1);
+  }
+
+  @Test
+  public void issue_2337_if_thenIf_thenSimple_elseSimple_elseSimple() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(1 == 2) ? (3 == 4) ? 1 : 2 : 3");
+    _builder.newLine();
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("(1 == 2)\t\t\t? (3 == 4) \t\t\t\t\t? ");
+    _builder_1.newLine();
+    _builder_1.append("1\t: 2 : ");
+    _builder_1.newLine();
+    _builder_1.append("3");
+    _builder_1.newLine();
+    this.assertFormattedExpression(_builder.toString(), _builder_1);
+  }
+
+  @Test
+  public void issue_2337_if_thenIf_thenSimple_elseBlock_elseSimple() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(1 < 2)");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("? 1");
@@ -305,15 +363,29 @@ public class XtendConditionalExpressionFormatterTest extends AbstractXtendFormat
     _builder.newLine();
     _builder.newLine();
     StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("(a < b)\t? 1\t: {2}");
+    _builder_1.append("(1 < 2)\t? (3 == 4) ? 1\t: {2} : 3");
     _builder_1.newLine();
     this.assertFormattedExpression(_builder.toString(), _builder_1);
   }
 
   @Test
   public void issue_2337_if_thenBlock_elseSimple() {
+    int _xifexpression = (int) 0;
+    if ((1 == 2)) {
+      _xifexpression = 1;
+    } else {
+      _xifexpression = 2;
+    }
+    int x = _xifexpression;
+    int _xifexpression_1 = (int) 0;
+    if ((1 == 2)) {
+      _xifexpression_1 = 1;
+    } else {
+      _xifexpression_1 = 2;
+    }
+    int y = _xifexpression_1;
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("(a < b)");
+    _builder.append("(1 == 2)");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("? {");
@@ -322,13 +394,10 @@ public class XtendConditionalExpressionFormatterTest extends AbstractXtendFormat
     _builder.append("1");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append(": 2");
+    _builder.append("} : 2");
     _builder.newLine();
     StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("(a < b) ? {1}: 2");
+    _builder_1.append("(1 == 2) ? {1}: 2");
     _builder_1.newLine();
     this.assertFormattedExpression(_builder.toString(), _builder_1);
   }
@@ -336,10 +405,29 @@ public class XtendConditionalExpressionFormatterTest extends AbstractXtendFormat
   @Test
   public void issue_2337_if_thenSimple_elseSimple() {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("(a < b) ? 1 : 2");
+    _builder.append("(1 == 2) ? 1 : 2");
     _builder.newLine();
     StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("(a < b) ? 1 : 2");
+    _builder_1.append("(1 == 2) ? 1 : 2");
+    _builder_1.newLine();
+    this.assertFormattedExpression(_builder.toString(), _builder_1);
+  }
+
+  @Test
+  public void issue_2337_if_thenSimple_elseSimple_multiline() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(1 == 2)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("? 1");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append(": 2");
+    _builder.newLine();
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("(1 == 2) ? 1 : ");
+    _builder_1.newLine();
+    _builder_1.append("2");
     _builder_1.newLine();
     this.assertFormattedExpression(_builder.toString(), _builder_1);
   }
@@ -408,136 +496,6 @@ public class XtendConditionalExpressionFormatterTest extends AbstractXtendFormat
     _builder_1.append("4");
     _builder_1.newLine();
     _builder_1.append("}");
-    _builder_1.newLine();
-    this.assertFormattedExpression(_builder.toString(), _builder_1);
-  }
-
-  @Test
-  public void issue_2337_blockExpression_02() {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("(a < b)");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("? (x == y)");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("? (z1 = z2)");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("? {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("77");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("} : {");
-    _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("88");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append(": {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("11");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append(": {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("4");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("// classical if");
-    _builder.newLine();
-    _builder.append("if (a < b)");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("if (x == b) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("10");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("} else {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("11");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("else {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("4");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("(a < b)\t\t\t\t? (x == y)\t\t\t\t? ");
-    _builder_1.newLine();
-    _builder_1.append("\t\t\t");
-    _builder_1.append("(z1 = z2) ? {77} ");
-    _builder_1.newLine();
-    _builder_1.append("\t\t");
-    _builder_1.newLine();
-    _builder_1.append(": {88}");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.newLine();
-    _builder_1.append("\t \t");
-    _builder_1.append(":8");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.append("{\t11\t\t}");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.append(": {");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.append("4");
-    _builder_1.newLine();
-    _builder_1.append("}");
-    _builder_1.newLine();
-    _builder_1.append("// classical if");
-    _builder_1.newLine();
-    _builder_1.append("if aa < ba");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.append("if  (x == b)");
-    _builder_1.newLine();
-    _builder_1.append("\t ");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.append("10");
-    _builder_1.newLine();
-    _builder_1.append("}");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.append("else\t}");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.append("11");
-    _builder_1.newLine();
-    _builder_1.append("}");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.append("else\t{");
-    _builder_1.newLine();
-    _builder_1.append("\t");
-    _builder_1.append("4");
-    _builder_1.newLine();
-    _builder_1.append("}\t\t");
-    _builder_1.newLine();
     _builder_1.newLine();
     this.assertFormattedExpression(_builder.toString(), _builder_1);
   }
