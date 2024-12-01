@@ -23,13 +23,18 @@ import org.junit.Test;
 
 import com.google.inject.Inject;
 
-@InjectWith(ContentAssistFragmentTestLangInjectorProvider.class)
+@InjectWith(ExtendedXbaseResourceDescriptionStrategyTest.ContentAssistFragmentTestLangInjectorProviderCustom.class)
 public class ExtendedXbaseResourceDescriptionStrategyTest extends AbstractXbaseImportedNamesTest {
+
 	@Inject
 	private ParseHelper<ContentAssistFragmentTestLanguageRoot> parseHelper;
 	@Inject
 	private ValidationTestHelper validationHelper;
-	
+
+	// inheritance allows for bindClassLoaderToInstance to get the class loader of this bundle
+	public static class ContentAssistFragmentTestLangInjectorProviderCustom extends ContentAssistFragmentTestLangInjectorProvider {
+	}
+
 	@Test
 	public void testImportedNamesFromModelReferences() throws Exception {
 		ContentAssistFragmentTestLanguageRoot model = parseHelper.parse("{} entity x extends an.Entity");
@@ -54,9 +59,9 @@ public class ExtendedXbaseResourceDescriptionStrategyTest extends AbstractXbaseI
 	}
 	
 	@Override
-		protected void addExpectatedImportedNames(Resource resource, List<String> expectation) {
-			super.addExpectatedImportedNames(resource, expectation);
-			expectation.add("my.test." + resource.getURI().trimFileExtension().lastSegment().toLowerCase());
-			expectation.add("my.test.java$util$arraylist");
-		}
+	protected void addExpectatedImportedNames(Resource resource, List<String> expectation) {
+		super.addExpectatedImportedNames(resource, expectation);
+		expectation.add("my.test." + resource.getURI().trimFileExtension().lastSegment().toLowerCase());
+		expectation.add("my.test.testdata$stubs$stubbedlist");
+	}
 }

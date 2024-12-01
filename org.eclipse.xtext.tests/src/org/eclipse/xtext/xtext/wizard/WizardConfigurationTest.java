@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.Objects;
 
-import org.eclipse.xtext.util.JavaVersion;
 import org.eclipse.xtext.util.XtextVersion;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.junit.Before;
@@ -78,11 +77,10 @@ public class WizardConfigurationTest {
 	}
 	
 	@Test
-	public void p2ProjectsEnablesSourceGenerationWithTychoWhenMavenBuiltIsEnabledJ11() {
+	public void p2ProjectsEnablesSourceGenerationWithTychoWhenMavenBuiltIsEnabled() {
 		config.getUiProject().setEnabled(true);
 		config.getP2Project().setEnabled(true);
 		config.setPreferredBuildSystem(BuildSystem.MAVEN);
-		config.setJavaVersion(JavaVersion.JAVA11);
 		assertTrue(config.needsTychoBuild());
 		assertTrue(config.getParentProject().pom().getContent().contains("tycho-source-plugin"));
 		assertFalse(config.getParentProject().pom().getContent().contains("tycho-source-feature-plugin"));
@@ -351,21 +349,7 @@ public class WizardConfigurationTest {
 	}
 
 	@Test
-	public void allBuildSystemsUseJava11() {
-		String parentPom = config.getParentProject().pom().getContent();
-		assertTrue(parentPom.contains("<maven.compiler.source>11</maven.compiler.source>"));
-		assertTrue(parentPom.contains("<maven.compiler.target>11</maven.compiler.target>"));
-		String parentGradle = config.getParentProject().buildGradle().getContent();
-		assertTrue(parentGradle.contains("sourceCompatibility = JavaVersion.VERSION_11"));
-		assertTrue(parentGradle.contains("targetCompatibility = JavaVersion.VERSION_11"));
-		for (String it : Lists.transform(allJavaProjects(), (ProjectDescriptor it) -> it.manifest())) {
-			assertTrue(it.contains("Bundle-RequiredExecutionEnvironment: JavaSE-11"));
-		}
-	}
-
-	@Test
-	public void allBuildSystemsUseOtherJava() {
-		config.setJavaVersion(JavaVersion.JAVA17);
+	public void allBuildSystemsUseJava17() {
 		String parentPom = config.getParentProject().pom().getContent();
 		assertTrue(parentPom.contains("<maven.compiler.source>17</maven.compiler.source>"));
 		assertTrue(parentPom.contains("<maven.compiler.target>17</maven.compiler.target>"));

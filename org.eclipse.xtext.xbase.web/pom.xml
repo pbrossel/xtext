@@ -1,9 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.eclipse.xtext</groupId>
 		<artifactId>xtext-parent</artifactId>
-		<version>2.35.0-SNAPSHOT</version>
+		<version>2.38.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.eclipse.xtext.xbase.web</artifactId>
 	<packaging>jar</packaging>
@@ -12,6 +12,16 @@
 	<description>Additional services for the web integration of Xbase.</description>
 
 	<dependencies>
+		<!-- pin core.runtime related to the package "org.eclipse.core.runtime
+			to avoid
+			java.lang.SecurityException: class "org.eclipse.core.runtime.OperationCanceledException"'s signer information does not match signer information of other classes in the same package
+			Note: the position of these dependencies counts: they must
+			come before the other ones -->
+		<dependency>
+			<groupId>org.eclipse.platform</groupId>
+			<artifactId>org.eclipse.core.runtime</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext.web</artifactId>
@@ -43,11 +53,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.platform</groupId>
-			<artifactId>org.eclipse.core.runtime</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

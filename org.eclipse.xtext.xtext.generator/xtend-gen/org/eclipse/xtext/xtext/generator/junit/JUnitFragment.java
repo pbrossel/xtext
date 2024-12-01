@@ -46,10 +46,6 @@ public class JUnitFragment extends AbstractStubGeneratingFragment {
   private FileAccessFactory fileAccessFactory;
 
   @Accessors(AccessorType.PUBLIC_SETTER)
-  @Deprecated(forRemoval = true, since = "2.30")
-  private boolean useDeprecatedClasses = false;
-
-  @Accessors(AccessorType.PUBLIC_SETTER)
   private boolean skipXbaseTestingPackage = false;
 
   private JUnitVersion junitVersion = JUnitVersion.JUNIT_4;
@@ -63,13 +59,7 @@ public class JUnitFragment extends AbstractStubGeneratingFragment {
   }
 
   protected String getTestingPackage() {
-    String _xifexpression = null;
-    if (this.useDeprecatedClasses) {
-      _xifexpression = this.getUiTestingPackage();
-    } else {
-      _xifexpression = "org.eclipse.xtext.testing";
-    }
-    return _xifexpression;
+    return "org.eclipse.xtext.testing";
   }
 
   protected String getUiTestingPackage() {
@@ -77,28 +67,18 @@ public class JUnitFragment extends AbstractStubGeneratingFragment {
   }
 
   protected String getXbaseTestingPackage() {
-    String _xblockexpression = null;
-    {
-      if (this.skipXbaseTestingPackage) {
-        return "";
-      }
-      String _xifexpression = null;
-      if (this.useDeprecatedClasses) {
-        _xifexpression = this.getXbaseUiTestingPackage();
-      } else {
-        _xifexpression = "org.eclipse.xtext.xbase.testing";
-      }
-      _xblockexpression = _xifexpression;
+    String _xifexpression = null;
+    if (this.skipXbaseTestingPackage) {
+      return "";
+    } else {
+      _xifexpression = "org.eclipse.xtext.xbase.testing";
     }
-    return _xblockexpression;
+    return _xifexpression;
   }
 
   protected String getXbaseUiTestingPackage() {
     if (this.skipXbaseTestingPackage) {
       return "";
-    }
-    if (this.useDeprecatedClasses) {
-      return "org.eclipse.xtext.xbase.junit";
     }
     return "org.eclipse.xtext.xbase.ui.testing";
   }
@@ -611,6 +591,12 @@ public class JUnitFragment extends AbstractStubGeneratingFragment {
           _builder.append("// see https://bugs.eclipse.org/bugs/show_bug.cgi?id=493672");
           _builder.newLine();
           _builder.append("\t\t");
+          _builder.append("// allows for bindClassLoaderToInstance to get the class loader of the bundle");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("// containing the instance of the injector provider (possibly inherited)");
+          _builder.newLine();
+          _builder.append("\t\t");
           _builder.append("return new ");
           TypeReference _runtimeModule_1 = JUnitFragment.this._xtextGeneratorNaming.getRuntimeModule(JUnitFragment.this.getGrammar());
           _builder.append(_runtimeModule_1, "\t\t");
@@ -628,7 +614,7 @@ public class JUnitFragment extends AbstractStubGeneratingFragment {
           _builder.append("return ");
           String _simpleName_1 = JUnitFragment.this.injectorProvider().getSimpleName();
           _builder.append(_simpleName_1, "\t\t\t\t");
-          _builder.append(".class");
+          _builder.append(".this.getClass()");
           _builder.newLineIfNotEmpty();
           _builder.append("\t\t\t\t\t\t");
           _builder.append(".getClassLoader();");
@@ -758,11 +744,6 @@ public class JUnitFragment extends AbstractStubGeneratingFragment {
     String _simpleName = GrammarUtil.getSimpleName(this.getGrammar());
     String _plus = (_simpleName + "UiInjectorProvider");
     return new TypeReference(_eclipsePluginTestBasePackage, _plus);
-  }
-
-  @Deprecated
-  public void setUseDeprecatedClasses(final boolean useDeprecatedClasses) {
-    this.useDeprecatedClasses = useDeprecatedClasses;
   }
 
   public void setSkipXbaseTestingPackage(final boolean skipXbaseTestingPackage) {

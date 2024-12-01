@@ -54,6 +54,10 @@ public class JavaRuntimeVersion {
 		return JAVA_VERSION >= 17;
 	}
 
+	public static boolean isJava21OrLater() {
+		return JAVA_VERSION >= 21;
+	}
+
 	private static int determineJavaVersion() {
 		String javaVersion = System.getProperty("java.version");
 		if (javaVersion == null) {
@@ -91,7 +95,7 @@ public class JavaRuntimeVersion {
 				// ok
 			}
 			// fallback
-			return 11;
+			return 17;
 		}
 	}
 

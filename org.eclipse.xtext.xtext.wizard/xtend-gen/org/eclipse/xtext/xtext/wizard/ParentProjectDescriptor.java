@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, 2023 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -18,7 +18,6 @@ import java.util.Objects;
 import java.util.Set;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.util.JavaVersion;
 import org.eclipse.xtext.util.XtextVersion;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -106,11 +105,7 @@ public class ParentProjectDescriptor extends ProjectDescriptor {
   }
 
   public String getTychoVersion() {
-    return "4.0.7";
-  }
-
-  public String getTychoVersionJ11() {
-    return "2.7.5";
+    return "4.0.10";
   }
 
   private CharSequence loadResource(final String resourcePath) {
@@ -573,16 +568,8 @@ public class ParentProjectDescriptor extends ProjectDescriptor {
           _builder.newLine();
           _builder.append("\t");
           _builder.append("<tycho-version>");
-          {
-            boolean _isAtLeast = this.getConfig().getJavaVersion().isAtLeast(JavaVersion.JAVA17);
-            if (_isAtLeast) {
-              String _tychoVersion = this.getTychoVersion();
-              _builder.append(_tychoVersion, "\t");
-            } else {
-              String _tychoVersionJ11 = this.getTychoVersionJ11();
-              _builder.append(_tychoVersionJ11, "\t");
-            }
-          }
+          String _tychoVersion = this.getTychoVersion();
+          _builder.append(_tychoVersion, "\t");
           _builder.append("</tycho-version>");
           _builder.newLineIfNotEmpty();
           _builder.append("\t");
@@ -1213,105 +1200,6 @@ public class ParentProjectDescriptor extends ProjectDescriptor {
           _builder.newLine();
         }
       }
-      _builder.append("\t\t\t");
-      _builder.append("<plugin>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("<groupId>org.eclipse.m2e</groupId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("<artifactId>lifecycle-mapping</artifactId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("<version>1.0.0</version>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("<configuration>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t");
-      _builder.append("<lifecycleMappingMetadata>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t");
-      _builder.append("<pluginExecutions>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t");
-      _builder.append("<pluginExecution>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t");
-      _builder.append("<pluginExecutionFilter>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<groupId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("org.codehaus.mojo");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("</groupId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<artifactId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("build-helper-maven-plugin");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("</artifactId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<versionRange>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("[1.9.1,)");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("</versionRange>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<goals>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("<goal>add-resource</goal>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("<goal>add-source</goal>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("<goal>add-test-resource</goal>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("<goal>add-test-source</goal>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("</goals>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t");
-      _builder.append("</pluginExecutionFilter>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t");
-      _builder.append("<action>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<ignore></ignore>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t");
-      _builder.append("</action>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t");
-      _builder.append("</pluginExecution>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t");
-      _builder.append("</pluginExecutions>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t");
-      _builder.append("</lifecycleMappingMetadata>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("</configuration>");
-      _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.append("</plugin>");
-      _builder.newLine();
       {
         boolean _needsTychoBuild_4 = this.getConfig().needsTychoBuild();
         if (_needsTychoBuild_4) {

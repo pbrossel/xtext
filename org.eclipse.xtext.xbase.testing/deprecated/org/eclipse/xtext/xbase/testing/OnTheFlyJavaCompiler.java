@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2017 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2011, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.jdt.internal.compiler.batch.Main;
+import org.eclipse.xtext.testing.TemporaryFolder;
 import org.eclipse.xtext.util.Files;
 import org.eclipse.xtext.util.JavaVersion;
 import org.eclipse.xtext.util.Pair;
@@ -371,7 +372,7 @@ public class OnTheFlyJavaCompiler {
 	}
 
 	protected String getComplianceLevelArg() {
-		JavaVersion javaVersion = JavaVersion.JAVA5;
+		JavaVersion javaVersion = JavaVersion.JAVA8;
 		if (generatorConfigProvider != null) {
 			GeneratorConfig generatorConfig = generatorConfigProvider.get(null);
 			javaVersion = generatorConfig.getJavaSourceVersion();

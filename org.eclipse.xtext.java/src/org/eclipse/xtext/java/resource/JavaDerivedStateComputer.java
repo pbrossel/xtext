@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, 2020 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -45,6 +45,7 @@ import org.eclipse.xtext.common.types.access.binary.BinaryClass;
 import org.eclipse.xtext.common.types.access.binary.asm.ClassFileBytesAccess;
 import org.eclipse.xtext.common.types.access.binary.asm.JvmDeclaredTypeBuilder;
 import org.eclipse.xtext.common.types.descriptions.EObjectDescriptionBasedStubGenerator;
+import org.eclipse.xtext.jdt.facade.JdtFacade;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.parser.antlr.IReferableElementsUnloader;
 import org.eclipse.xtext.resource.IResourceDescriptions;
@@ -125,6 +126,9 @@ public class JavaDerivedStateComputer {
 			break;
 		case TypeDeclaration.ANNOTATION_TYPE_DECL:
 			jvmType = TypesFactory.eINSTANCE.createJvmAnnotationType();
+			break;
+		case TypeDeclaration.RECORD_DECL:
+			jvmType = TypesFactory.eINSTANCE.createJvmGenericType();
 			break;
 		default:
 			throw new IllegalArgumentException("Cannot handle type " + type.toString());
@@ -278,13 +282,13 @@ public class JavaDerivedStateComputer {
 		long targetLevel = toJdtVersion(targetVersion);
 		CompilerOptions compilerOptions = new CompilerOptions();
 		compilerOptions.targetJDK = targetLevel;
-		compilerOptions.inlineJsrBytecode = true;
 		compilerOptions.sourceLevel = sourceLevel;
 		compilerOptions.produceMethodParameters = true;
 		compilerOptions.produceReferenceInfo = true;
-		compilerOptions.originalSourceLevel = targetLevel;
 		compilerOptions.complianceLevel = sourceLevel;
-		compilerOptions.originalComplianceLevel = targetLevel;
+		JdtFacade.setOriginalSourceLevel(compilerOptions, targetLevel);
+		JdtFacade.setOriginalComplianceLevel(compilerOptions, targetLevel);
+		JdtFacade.setInlineJsrBytecode(compilerOptions, true);
 		return compilerOptions;
 	}
 

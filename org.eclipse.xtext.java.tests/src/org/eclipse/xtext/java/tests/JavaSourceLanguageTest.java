@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016, 2022 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2016, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -29,6 +29,7 @@ import org.eclipse.xtext.common.types.JvmParameterizedTypeReference;
 import org.eclipse.xtext.common.types.JvmType;
 import org.eclipse.xtext.common.types.JvmTypeReference;
 import org.eclipse.xtext.common.types.access.IJvmTypeProvider;
+import org.eclipse.xtext.java.resource.JavaConfig;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.resource.impl.ChunkedResourceDescriptions;
@@ -36,9 +37,12 @@ import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.testing.util.InMemoryURIHandler;
+import org.eclipse.xtext.util.JavaRuntimeVersion;
+import org.eclipse.xtext.util.JavaVersion;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -181,6 +185,26 @@ public class JavaSourceLanguageTest {
 		Assert.assertNotNull(Iterables.getFirst(clazz.getDeclaredOperations(), null));
 	}
 
+	@Test
+	public void testJava21Record() {
+		Assume.assumeTrue("Active only on Java 21 and later", JavaRuntimeVersion.isJava21OrLater());
+		ImmutableMap<String, String> files = ImmutableMap.<String, String>builder()
+				.put("example/MyRecord.java", 
+					"package example;\n"
+					+ "\n"
+					+ "public record MyRecord(String name, int age) {\n"
+					+ "\n"
+					+ "}\n"
+				+ "").build();
+		XtextResourceSet rs = this.resourceSet(files, JavaVersion.JAVA21);
+		Resource r1 = IterableExtensions.findFirst(rs.getResources(),
+				it -> it.getURI().toString().endsWith("MyRecord.java"));
+		Assert.assertEquals(1, r1.getContents().size());
+		JvmGenericType clazz = (JvmGenericType) Iterables.getFirst(r1.getContents(), null);
+		Assert.assertNotNull(clazz);
+		Assert.assertNotNull(Iterables.getFirst(clazz.getDeclaredOperations(), null));
+	}
+
 	@Inject
 	private Provider<XtextResourceSet> resourceSetProvider;
 
@@ -191,7 +215,22 @@ public class JavaSourceLanguageTest {
 	private IJvmTypeProvider.Factory typeProviderFactory;
 
 	protected XtextResourceSet resourceSet(Map<String, String> files) {
+		return this.resourceSet(files, null);
+	}
+
+	protected XtextResourceSet resourceSet(Map<String, String> files, JavaVersion javaVersion) {
 		XtextResourceSet result = resourceSetProvider.get();
+		if (javaVersion != null) {
+			/*
+			 * we need to configure the java version first before loading any resources into
+			 * the resourceset to make sure on the load / install stubs the correct java
+			 * version is picked
+			 */
+			JavaConfig javaConfig = new JavaConfig();
+			javaConfig.setJavaSourceLevel(javaVersion);
+			javaConfig.setJavaTargetLevel(javaVersion);
+			javaConfig.attachToEmfObject(result);
+		}
 		typeProviderFactory.createTypeProvider(result);
 		result.setClasspathURIContext(getClass().getClassLoader());
 		result.getURIConverter().getURIHandlers().clear();

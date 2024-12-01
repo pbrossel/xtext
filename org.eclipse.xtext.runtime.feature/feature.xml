@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.xtext.runtime"
       label="%featureName"
-      version="2.35.0.qualifier"
+      version="2.38.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
@@ -24,10 +24,10 @@ SPDX-License-Identifier: EPL-2.0
       %license
    </license>
    <requires>
-      <import plugin="com.google.guava" version="33.1.0" match="compatible"/>
+      <import plugin="com.google.guava" version="33.3.1" match="compatible"/>
       <import plugin="com.google.inject" version="7.0.0" match="compatible"/>
       <import plugin="org.apache.log4j" version="1.2.24" match="equivalent"/>
-      <import plugin="org.objectweb.asm" version="9.7.0" match="compatible"/>
+      <import plugin="org.objectweb.asm" version="9.7.1" match="compatible"/>
    </requires>
 
    <plugin
@@ -166,6 +166,20 @@ SPDX-License-Identifier: EPL-2.0
 
    <plugin
          id="org.eclipse.xtext.java.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.xtext.jdt.facade"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.xtext.jdt.facade.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

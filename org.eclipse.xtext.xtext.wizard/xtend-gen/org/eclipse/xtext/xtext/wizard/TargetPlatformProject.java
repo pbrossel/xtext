@@ -16,7 +16,6 @@ import java.util.Set;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.util.JUnitVersion;
-import org.eclipse.xtext.util.JavaVersion;
 import org.eclipse.xtext.util.XtextVersion;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -108,18 +107,9 @@ public class TargetPlatformProject extends ProjectDescriptor {
     _builder.append("\t\t\t");
     _builder.append("<unit id=\"org.eclipse.emf.sdk.feature.group\" version=\"0.0.0\"/>");
     _builder.newLine();
-    {
-      boolean _isAtLeast = this.getConfig().getJavaVersion().isAtLeast(JavaVersion.JAVA17);
-      if (_isAtLeast) {
-        _builder.append("\t\t\t");
-        _builder.append("<repository location=\"https://download.eclipse.org/releases/2024-06\"/>");
-        _builder.newLine();
-      } else {
-        _builder.append("\t\t\t");
-        _builder.append("<repository location=\"https://download.eclipse.org/releases/2023-03\"/>");
-        _builder.newLine();
-      }
-    }
+    _builder.append("\t\t\t");
+    _builder.append("<repository location=\"https://download.eclipse.org/releases/2024-12\"/>");
+    _builder.newLine();
     _builder.append("\t\t");
     _builder.append("</location>");
     _builder.newLine();
@@ -185,7 +175,7 @@ public class TargetPlatformProject extends ProjectDescriptor {
     _builder.append("<location includeAllPlatforms=\"false\" includeConfigurePhase=\"false\" includeMode=\"planner\" includeSource=\"true\" type=\"InstallableUnit\">");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("<unit id=\"com.google.gson\" version=\"2.10.1\"/>");
+    _builder.append("<unit id=\"com.google.gson\" version=\"2.11.0\"/>");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("<unit id=\"com.google.inject\" version=\"7.0.0\"/>");
@@ -197,7 +187,7 @@ public class TargetPlatformProject extends ProjectDescriptor {
     _builder.append("<unit id=\"org.antlr.runtime\" version=\"3.2.0.v20230929-1400\"/>");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("<unit id=\"org.junit\" version=\"4.13.2.v20230809-1000\"/>");
+    _builder.append("<unit id=\"org.junit\" version=\"0.0.0\"/>");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("<unit id=\"org.hamcrest\" version=\"2.2.0\"/>");
@@ -206,7 +196,7 @@ public class TargetPlatformProject extends ProjectDescriptor {
     _builder.append("<unit id=\"org.hamcrest.core\" version=\"2.2.0.v20230809-1000\"/>");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("<unit id=\"org.apache.commons.logging\" version=\"1.2.0\"/>");
+    _builder.append("<unit id=\"org.apache.commons.commons-logging\" version=\"0.0.0\"/>");
     _builder.newLine();
     {
       JUnitVersion _junitVersion = this.getConfig().getJunitVersion();
@@ -251,13 +241,13 @@ public class TargetPlatformProject extends ProjectDescriptor {
       }
     }
     _builder.append("\t\t\t");
-    _builder.append("<unit id=\"org.objectweb.asm\" version=\"9.7.0\"/>");
+    _builder.append("<unit id=\"org.objectweb.asm\" version=\"9.7.1\"/>");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("<unit id=\"io.github.classgraph.classgraph\" version=\"4.8.172\"/>");
+    _builder.append("<unit id=\"io.github.classgraph.classgraph\" version=\"0.0.0\"/>");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("<repository location=\"https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-06\"/>");
+    _builder.append("<repository location=\"https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-12\"/>");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("</location>");

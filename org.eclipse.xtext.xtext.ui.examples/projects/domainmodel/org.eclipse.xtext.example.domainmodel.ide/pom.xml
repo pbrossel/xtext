@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.eclipse.xtext.example.domainmodel</groupId>
 		<artifactId>org.eclipse.xtext.example.domainmodel.parent</artifactId>
-		<version>2.35.0-SNAPSHOT</version>
+		<version>2.38.0-SNAPSHOT</version>
 		<relativePath>../org.eclipse.xtext.example.domainmodel.releng</relativePath>
 	</parent>
 	<artifactId>org.eclipse.xtext.example.domainmodel.ide</artifactId>
@@ -55,10 +55,8 @@
 							<overWriteIfNewer>true</overWriteIfNewer>
 							<excludeTransitive>true</excludeTransitive>
 							<excludeArtifactIds>
-								com.ibm.icu,
-								org.apache.ant,
-								org.apache.commons.lang,
-								org.apache.commons.logging,
+								icu4j,
+								commons-logging,
 								org.eclipse.core.commands,
 								org.eclipse.core.contenttype,
 								org.eclipse.core.expressions,

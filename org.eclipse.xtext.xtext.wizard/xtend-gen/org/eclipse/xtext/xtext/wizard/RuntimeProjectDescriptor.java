@@ -110,7 +110,7 @@ public class RuntimeProjectDescriptor extends TestedProjectDescriptor {
       final Procedure1<ExternalDependency> _function = (ExternalDependency it) -> {
         final Procedure1<ExternalDependency.P2Coordinates> _function_1 = (ExternalDependency.P2Coordinates it_1) -> {
           it_1.setBundleId("org.eclipse.equinox.common");
-          it_1.setVersion("3.16.0");
+          it_1.setVersion("3.19.0");
         };
         it.p2(_function_1);
       };
@@ -155,16 +155,7 @@ public class RuntimeProjectDescriptor extends TestedProjectDescriptor {
   @Override
   public Set<String> getDevelopmentBundles() {
     final LinkedHashSet<String> result = CollectionLiterals.<String>newLinkedHashSet(
-      "org.eclipse.xtext.xbase", 
-      "org.eclipse.xtext.common.types", 
-      "org.eclipse.xtext.xtext.generator", 
-      "org.eclipse.emf.codegen.ecore", 
-      "org.eclipse.emf.mwe.utils", 
-      "org.eclipse.emf.mwe2.launch", 
-      "org.eclipse.emf.mwe2.lib", 
-      "org.objectweb.asm", 
-      "org.apache.commons.logging", 
-      "org.apache.log4j");
+      "org.eclipse.xtext.xtext.generator.dependencies");
     boolean _isFromExistingEcoreModels = this.isFromExistingEcoreModels();
     if (_isFromExistingEcoreModels) {
       final Function1<EPackageInfo, Boolean> _function = (EPackageInfo it) -> {
@@ -529,6 +520,14 @@ public class RuntimeProjectDescriptor extends TestedProjectDescriptor {
     _builder.append("\t\t\t\t");
     _builder.append("// composedCheck = \"org.eclipse.xtext.validation.NamesAreUniqueValidator\"");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("// Enables several checks on the inferred Jvm model for Xbase languages concerning Java inheritance relations");
+    _builder.newLine();
+    _builder.append("\t\t\t\t");
+    _builder.append("// composedCheck = \"org.eclipse.xtext.xbase.validation.JvmGenericTypeValidator\"");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage");
     _builder.newLine();
@@ -771,6 +770,9 @@ public class RuntimeProjectDescriptor extends TestedProjectDescriptor {
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("<execution>");
+      _builder.newLine();
+      _builder.append("\t\t\t\t\t");
+      _builder.append("<?m2e ignore?>");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
       _builder.append("<id>mwe2Launcher</id>");
@@ -1024,6 +1026,10 @@ public class RuntimeProjectDescriptor extends TestedProjectDescriptor {
           _builder.append("\t\t");
           _builder.append("\t\t");
           _builder.append("<execution>");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("\t\t\t");
+          _builder.append("<?m2e ignore?>");
           _builder.newLine();
           _builder.append("\t\t");
           _builder.append("\t\t\t");
@@ -1319,108 +1325,6 @@ public class RuntimeProjectDescriptor extends TestedProjectDescriptor {
       }
       _builder.append("\t");
       _builder.append("</plugins>");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("<pluginManagement>");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("<plugins>");
-      _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.append("<plugin>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("<groupId>org.eclipse.m2e</groupId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("<artifactId>lifecycle-mapping</artifactId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("<version>1.0.0</version>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("<configuration>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t");
-      _builder.append("<lifecycleMappingMetadata>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t");
-      _builder.append("<pluginExecutions>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t");
-      _builder.append("<pluginExecution>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t");
-      _builder.append("<pluginExecutionFilter>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<groupId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("org.codehaus.mojo");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("</groupId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<artifactId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("exec-maven-plugin");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("</artifactId>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<versionRange>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("[1.2.1,)");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("</versionRange>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<goals>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t\t");
-      _builder.append("<goal>java</goal>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("</goals>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t");
-      _builder.append("</pluginExecutionFilter>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t");
-      _builder.append("<action>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t\t");
-      _builder.append("<ignore></ignore>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t\t");
-      _builder.append("</action>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t\t");
-      _builder.append("</pluginExecution>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t\t");
-      _builder.append("</pluginExecutions>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t\t");
-      _builder.append("</lifecycleMappingMetadata>");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append("</configuration>");
-      _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.append("</plugin>");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("</plugins>");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("</pluginManagement>");
       _builder.newLine();
       _builder.append("</build>");
       _builder.newLine();

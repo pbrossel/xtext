@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2017, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -19,22 +19,36 @@ import java.util.List;
  */
 public enum JavaVersion {
 	
+	/*
+	 * Implemenatation note: The deprecated enum constants cannot be removed since the ordinals of all
+	 * subsequent enum constants would change.
+	 */
+	
 	/**
 	 * Java 5 language enhancements: generics, simplified for-loop, autoboxing and unboxing, enums, varargs, static
 	 * import, annotations.
+	 * 
+	 * @deprecated Not supported anymore. Defaults to Java8.
 	 */
-	JAVA5("Java 5", new String[] {"1.5"}, "J2SE-1.5", "-1.5", Constants.JAVA5),
+	@Deprecated
+	JAVA5("Java 8", new String[] {"1.8", "8"}, "JavaSE-1.8", "-1.8", Constants.JAVA8),
 
 	/**
 	 * Java 6 language enhancements: Override annotations for implemented methods.
+	 * 
+	 * @deprecated Not supported anymore. Defaults to Java8.
 	 */
-	JAVA6("Java 6", new String[] {"1.6", "6"}, "JavaSE-1.6", "-1.6", Constants.JAVA6),
+	@Deprecated
+	JAVA6("Java 8", new String[] {"1.8", "8"}, "JavaSE-1.8", "-1.8", Constants.JAVA8),
 
 	/**
 	 * Java 7 language enhancements: extended numeric literals, switch over strings, type inference, try-with-resources,
 	 * catch multiple exceptions.
+	 * 
+	 * @deprecated Not supported anymore. Defaults to Java8.
 	 */
-	JAVA7("Java 7", new String[] {"1.7", "7"}, "JavaSE-1.7", "-1.7", Constants.JAVA7),
+	@Deprecated
+	JAVA7("Java 8", new String[] {"1.8", "8"}, "JavaSE-1.8", "-1.8", Constants.JAVA8),
 
 	/**
 	 * Java 8 language enhancements: lambda expressions, better type inference, more flexible annotations.
@@ -57,20 +71,23 @@ public enum JavaVersion {
 	/**
 	 * Well, Java 17, next LTS version
 	 */
-	JAVA17("Java 17", new String[] {"17", "1.17"}, "JavaSE-17", "-1.17", Constants.JAVA17)
+	JAVA17("Java 17", new String[] {"17", "1.17"}, "JavaSE-17", "-1.17", Constants.JAVA17),
+	/**
+	 * Java 21, next LTS version
+	 */
+	JAVA21("Java 21", new String[] {"21", "1.21"}, "JavaSE-21", "-1.21", Constants.JAVA21)
 	;
 
 	private static final class Constants {
 		private static final int MAJOR_VERSION_1_5 = 49;
 		private static final int MINOR_VERSION_0 = 0;
-		private static final long JAVA5 = ((long)MAJOR_VERSION_1_5 << 16) + MINOR_VERSION_0;
-		private static final long JAVA6 = ((long)(MAJOR_VERSION_1_5 + 1) << 16) + MINOR_VERSION_0;
-		private static final long JAVA7 = ((long)(MAJOR_VERSION_1_5 + 2) << 16) + MINOR_VERSION_0;
+		
 		private static final long JAVA8 = ((long)(MAJOR_VERSION_1_5 + 3) << 16) + MINOR_VERSION_0;
 		private static final long JAVA9 = ((long)(MAJOR_VERSION_1_5 + 4) << 16) + MINOR_VERSION_0;
 		private static final long JAVA10 = ((long)(MAJOR_VERSION_1_5 + 5) << 16) + MINOR_VERSION_0;
 		private static final long JAVA11 = ((long)(MAJOR_VERSION_1_5 + 6) << 16) + MINOR_VERSION_0;
 		private static final long JAVA17 = ((long)(MAJOR_VERSION_1_5 + 12) << 16) + MINOR_VERSION_0;
+		private static final long JAVA21 = ((long)(MAJOR_VERSION_1_5 + 16) << 16) + MINOR_VERSION_0;
 	}
 
 	//	 if you introduce a new JavaVersion don't forget to adapt
@@ -103,9 +120,12 @@ public enum JavaVersion {
 	}
 
 	public static JavaVersion fromBree(String bree) {
-		for (JavaVersion version : JavaVersion.values()) {
-			if (version.bree.equals(bree))
-				return version;
+		JavaVersion[] values = JavaVersion.values();
+		// iterate backwards since it's a fair assumption that we'll use a more recent java version
+		for(int i = values.length - 1; i >= 0; i--) {
+			JavaVersion candidate = values[i];
+			if (candidate.bree.equals(bree))
+				return candidate;
 		}
 		return null;
 	}
@@ -147,4 +167,5 @@ public enum JavaVersion {
 	public long toJdtClassFileConstant() {
 		return jdtClassFileConstant;
 	}
+	
 }

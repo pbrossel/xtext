@@ -24,7 +24,6 @@ import org.eclipse.xtext.testing.smoketest.IgnoredBySmokeTest
 import org.junit.After
 import org.junit.AfterClass
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -327,7 +326,6 @@ class BatchCompilerTest {
 	}
 
 	@Test
-	@Ignore
 	def void bug416262() {
 		batchCompiler.sourcePath = BUG416262_SRC_DIRECTORY
 		assertTrue("Compiling funny file pass", batchCompiler.compile)
@@ -349,8 +347,11 @@ class BatchCompilerTest {
 	@Test
 	def void testActiveAnnotatons1() {
 		batchCompiler.sourcePath = "./batch-compiler-data/activeAnnotations1"
-		val logs = LoggingTester.captureLogging(Level.ERROR, XtendBatchCompiler)[
-			assertFalse(batchCompiler.compile)
+		val logs = LoggingTester.captureLogging(Level.ERROR, XtendBatchCompiler) [
+			val providerLogs = LoggingTester.captureLogging(Level.ERROR, "org.eclipse.xtend.core.macro.ActiveAnnotationContextProvider")[
+				assertFalse(batchCompiler.compile)
+			]
+			providerLogs.assertNumberOfLogEntries(1)
 		]
 		logs.assertNumberOfLogEntries(1)
 	}
@@ -485,7 +486,7 @@ class BatchCompilerTest {
 		assertTrue(batchCompiler.compile)
 		assertEquals(0, new File(TEMP_DIRECTORY).list.size)
 	}
-	
+
 	@Test
 	def void testNoSuppressWarningsAnnotations() {
 		batchCompiler.generateSyntheticSuppressWarnings = false
@@ -493,36 +494,28 @@ class BatchCompilerTest {
 		assertTrue(batchCompiler.compile)
 		assertFalse((OUTPUT_DIRECTORY + "/XtendA.java").contents.contains("@SuppressWarnings"))
 	}
-	
-	
+
 	@Test
+	def void testNoXbaseGenerated() {
+		batchCompiler.useXbaseGenerated = false
+		batchCompiler.sourcePath = "./batch-compiler-data/xtendClass"
+		assertTrue(batchCompiler.compile)
+		assertFalse((OUTPUT_DIRECTORY + "/XtendA.java").contents.contains("@XbaseGenerated"))
+	}
+
+	@Test(expected = IllegalArgumentException)
 	def void testJavaVersion5() {
 		batchCompiler.javaSourceVersion = "1.5"
-		batchCompiler.sourcePath = "./batch-compiler-data/javaVersion"
-		assertTrue(batchCompiler.compile)
-		val generated = (OUTPUT_DIRECTORY + "/XtendA.java").contents
-		assertFalse(generated.contains("@Override"))
-		assertTrue(generated.contains("new Function1<Integer, String>"))
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException)
 	def void testJavaVersion6() {
 		batchCompiler.javaSourceVersion = "1.6"
-		batchCompiler.sourcePath = "./batch-compiler-data/javaVersion"
-		assertTrue(batchCompiler.compile)
-		val generated = (OUTPUT_DIRECTORY + "/XtendA.java").contents
-		assertTrue(generated.contains("@Override"))
-		assertTrue(generated.contains("new Function1<Integer, String>"))
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException)
 	def void testJavaVersion7() {
 		batchCompiler.javaSourceVersion = "1.7"
-		batchCompiler.sourcePath = "./batch-compiler-data/javaVersion"
-		assertTrue(batchCompiler.compile)
-		val generated = (OUTPUT_DIRECTORY + "/XtendA.java").contents
-		assertTrue(generated.contains("@Override"))
-		assertTrue(generated.contains("new Function1<Integer, String>"))
 	}
 	
 	@Test

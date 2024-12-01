@@ -75,6 +75,7 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.eclipse.xtext.xbase.lib.XbaseGenerated;
 import org.eclipse.xtext.xtype.XFunctionTypeRef;
 import org.eclipse.xtext.xtype.XImportDeclaration;
 import org.eclipse.xtext.xtype.XImportSection;
@@ -695,6 +696,7 @@ public class XtendFormatter extends XbaseWithAnnotationsFormatter {
   }
 
   @Override
+  @XbaseGenerated
   public void format(final Object anonymousClass, final IFormattableDocument format) {
     if (anonymousClass instanceof AnonymousClass) {
       _format((AnonymousClass)anonymousClass, format);

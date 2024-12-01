@@ -23,12 +23,16 @@ import org.junit.Test;
 
 import com.google.inject.Inject;
 
-@InjectWith(XImportSectionTestLangInjectorProvider.class)
+@InjectWith(XImportSectionResourceDescriptionStrategyTest.XImportSectionTestLangInjectorProviderCustom.class)
 public class XImportSectionResourceDescriptionStrategyTest extends AbstractXbaseImportedNamesTest {
 	@Inject
 	private ParseHelper<ImportSectionTestLanguageRoot> parseHelper;
 	@Inject
 	private ValidationTestHelper validationHelper;
+
+	// inheritance allows for bindClassLoaderToInstance to get the class loader of this bundle
+	public static class XImportSectionTestLangInjectorProviderCustom extends XImportSectionTestLangInjectorProvider {
+	}
 
 	@Override
 	protected XExpression expression(CharSequence string) throws Exception {
@@ -70,6 +74,6 @@ public class XImportSectionResourceDescriptionStrategyTest extends AbstractXbase
 	protected void addExpectatedImportedNames(Resource resource, List<String> expectation) {
 		super.addExpectatedImportedNames(resource, expectation);
 		expectation.add("my.test." + resource.getURI().trimFileExtension().lastSegment().toLowerCase());
-		expectation.add("my.test.java$util$arraylist");
+		expectation.add("my.test.testdata$stubs$stubbedlist");
 	}
 }

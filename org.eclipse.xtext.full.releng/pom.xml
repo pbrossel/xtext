@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.xtext</groupId>
 	<artifactId>org.eclipse.xtext.full.releng</artifactId>
@@ -33,6 +33,7 @@
 		<module>../org.eclipse.xtext.ide</module>
 		<module>../org.eclipse.xtext.testing</module>
 		<module>../org.eclipse.xtext.xtext.ide</module>
+		<module>../org.eclipse.xtext.xtext.generator.dependencies</module>
 		<module>../org.eclipse.xtext.xtext.generator</module>
 		<module>../org.eclipse.xtext.xtext.wizard</module>
 		<!-- This is required by the xtext-maven-plugin IT -->
@@ -55,6 +56,7 @@
 		<module>../org.eclipse.xtext.xbase.ide</module>
 		<module>../org.eclipse.xtext.xbase.testing</module>
 		<module>../org.eclipse.xtext.builder.standalone</module>
+		<module>../org.eclipse.xtext.jdt.facade</module>
 		<module>../org.eclipse.xtext.java</module>
 		<!-- This is required by the xtext-maven-plugin IT -->
 		<module>../org.eclipse.xtext.purexbase</module>
@@ -92,16 +94,13 @@
 		<module>../org.eclipse.xtext.ui.codetemplates.ide</module>
 		<module>../org.eclipse.xtext.ui.codetemplates.ui</module>
 		<module>../org.eclipse.xtext.ui.ecore</module>
-		<module>../org.eclipse.xtext.junit4</module>
 		<module>../org.eclipse.xtext.ui.testing</module>
-		<module>../org.eclipse.xtext.xbase.junit</module>
 		<module>../org.eclipse.xtext.xtext.ui</module>
 		<module>../org.eclipse.xtext.xtext.ui.graph</module>
 		<module>../org.eclipse.xtext.purexbase.ui</module>
 		<module>../org.eclipse.xtext.doc</module>
 		<module>../org.eclipse.xtext.xtext.ui.examples</module>
 		<module>../org.eclipse.xtext.builder.tests</module>
-		<module>../org.eclipse.xtext.junit4.tests</module>
 		<module>../org.eclipse.xtext.ui.codetemplates.tests</module>
 		<module>../org.eclipse.xtext.eclipse.tests</module>
 		<module>../org.eclipse.xtext.ui.tests</module>

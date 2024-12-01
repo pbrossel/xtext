@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2016 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -37,6 +37,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			import java.util.List;
 			import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 			import org.eclipse.xtext.xbase.lib.IterableExtensions;
+			import org.eclipse.xtext.xbase.lib.XbaseGenerated;
 			
 			@SuppressWarnings("all")
 			public class SOE {
@@ -44,6 +45,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			  }
 			
 			  public static class CustomItr implements Iterable<SOE.A> {
+			    @Override
 			    public Iterator<SOE.A> iterator() {
 			      throw new UnsupportedOperationException();
 			    }
@@ -57,6 +59,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			    return CollectionLiterals.<SOE.A>emptyList();
 			  }
 			
+			  @XbaseGenerated
 			  public List<SOE.A> getList(final Object it) {
 			    if (it instanceof SOE.A) {
 			      return _getList((SOE.A)it);
@@ -92,10 +95,12 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			import java.util.List;
 			import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 			import org.eclipse.xtext.xbase.lib.IterableExtensions;
+			import org.eclipse.xtext.xbase.lib.XbaseGenerated;
 			
 			@SuppressWarnings("all")
 			public class C {
 			  public static class CustomItr implements Iterable<C> {
+			    @Override
 			    public Iterator<C> iterator() {
 			      return null;
 			    }
@@ -109,6 +114,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			    return CollectionLiterals.<C>emptyList();
 			  }
 			
+			  @XbaseGenerated
 			  public List<C> getList(final Object it) {
 			    if (it instanceof C) {
 			      return _getList((C)it);
@@ -146,6 +152,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			import java.util.List;
 			import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 			import org.eclipse.xtext.xbase.lib.IterableExtensions;
+			import org.eclipse.xtext.xbase.lib.XbaseGenerated;
 			
 			@SuppressWarnings("all")
 			public class SOE {
@@ -153,6 +160,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			  }
 			
 			  public static class CustomItr implements Iterable<SOE.A> {
+			    @Override
 			    public Iterator<SOE.A> iterator() {
 			      return null;
 			    }
@@ -166,6 +174,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			    return IterableExtensions.<SOE.A>toList(new SOE.CustomItr());
 			  }
 			
+			  @XbaseGenerated
 			  public List<SOE.A> getList(final Object it) {
 			    if (it instanceof SOE.A) {
 			      return _getList((SOE.A)it);
@@ -202,6 +211,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			import java.util.List;
 			import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 			import org.eclipse.xtext.xbase.lib.IterableExtensions;
+			import org.eclipse.xtext.xbase.lib.XbaseGenerated;
 			
 			@SuppressWarnings("all")
 			public class SOE {
@@ -209,6 +219,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			  }
 			
 			  public static class CustomItr implements Iterable<SOE.A> {
+			    @Override
 			    public Iterator<SOE.A> iterator() {
 			      return null;
 			    }
@@ -222,6 +233,7 @@ class CompilerBug470768Test extends AbstractXtendCompilerTest {
 			    return CollectionLiterals.<SOE.A>emptyList();
 			  }
 			
+			  @XbaseGenerated
 			  public List<SOE.A> getList(final Object it) {
 			    if (it instanceof SOE.A) {
 			      return _getList((SOE.A)it);

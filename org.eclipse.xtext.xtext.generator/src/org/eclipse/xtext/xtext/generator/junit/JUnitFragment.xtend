@@ -30,10 +30,6 @@ class JUnitFragment extends AbstractStubGeneratingFragment {
 	@Inject FileAccessFactory fileAccessFactory
 
 	@Accessors(PUBLIC_SETTER)
-	@Deprecated(forRemoval=true,since="2.30")
-	boolean useDeprecatedClasses = false
-
-	@Accessors(PUBLIC_SETTER)
 	boolean skipXbaseTestingPackage = false
 
 	JUnitVersion junitVersion = JUnitVersion.JUNIT_4
@@ -51,10 +47,7 @@ class JUnitFragment extends AbstractStubGeneratingFragment {
 	}
 
 	def protected getTestingPackage() {
-		if (useDeprecatedClasses)
-			getUiTestingPackage()
-		else
-			"org.eclipse.xtext.testing"
+		"org.eclipse.xtext.testing"
 	}
 
 	protected def String getUiTestingPackage() {
@@ -64,8 +57,6 @@ class JUnitFragment extends AbstractStubGeneratingFragment {
 	def protected getXbaseTestingPackage() {
 		if (skipXbaseTestingPackage)
 			return ""
-		if (useDeprecatedClasses)
-			getXbaseUiTestingPackage()
 		else
 			"org.eclipse.xtext.xbase.testing"
 	}
@@ -73,8 +64,6 @@ class JUnitFragment extends AbstractStubGeneratingFragment {
 	protected def String getXbaseUiTestingPackage() {
 		if (skipXbaseTestingPackage)
 			return ""
-		if (useDeprecatedClasses)
-			return "org.eclipse.xtext.xbase.junit"
 		return "org.eclipse.xtext.xbase.ui.testing"
 	}
 
@@ -254,10 +243,12 @@ class JUnitFragment extends AbstractStubGeneratingFragment {
 				protected «grammar.runtimeModule» createRuntimeModule() {
 					// make it work also with Maven/Tycho and OSGI
 					// see https://bugs.eclipse.org/bugs/show_bug.cgi?id=493672
+					// allows for bindClassLoaderToInstance to get the class loader of the bundle
+					// containing the instance of the injector provider (possibly inherited)
 					return new «grammar.runtimeModule»() {
 						@Override
 						public «classLoader» bindClassLoaderToInstance() {
-							return «injectorProvider.simpleName».class
+							return «injectorProvider.simpleName».this.getClass()
 									.getClassLoader();
 						}
 					};

@@ -9,9 +9,9 @@
 package org.eclipse.xtext.xbase.testing.evaluation;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 import static com.google.common.collect.Sets.newTreeSet;
-import static com.google.common.collect.Maps.newHashMap;
 import static java.util.Collections.emptyList;
 
 import java.io.IOException;
@@ -25,20 +25,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import org.eclipse.xtext.testing.TemporaryFolder;
 import org.eclipse.xtext.xbase.lib.Pair;
-import org.eclipse.xtext.xbase.testing.TemporaryFolder;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.inject.Inject;
+
 import testdata.CloseException;
 import testdata.ExceptionSubclass;
 import testdata.OuterClass;
 import testdata.TryBodyException;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.inject.Inject;
 
 /**
  * @author Sebastian Zarnekow - Initial contribution and API
@@ -628,14 +628,14 @@ public abstract class AbstractXbaseEvaluationTest extends Assert {
 	
 	@Ignore("Wrong type")
 	@Test public void testReturnExpression_07() throws Exception {
-		assertEvaluatesTo(null, "return if (true) while(false) ('foo'+'bar').length else null");
-		assertEvaluatesTo(null, "return if (false) while(false) ('foo'+'bar').length else null");
+		assertEvaluatesTo(null, "return if (Boolean.TRUE) while(Boolean.FALSE) ('foo'+'bar').length else null");
+		assertEvaluatesTo(null, "return if (Boolean.FALSE) while(Boolean.FALSE) ('foo'+'bar').length else null");
 	}
 	
 	@Ignore("Wrong type")
 	@Test public void testReturnExpression_08() throws Exception {
-		assertEvaluatesTo(null, "return if (true) while(false) ('foo'+'bar').length else 'zonk'");
-		assertEvaluatesTo("zonk", "return if (false) while(false) ('foo'+'bar').length else 'zonk'");
+		assertEvaluatesTo(null, "return if (Boolean.TRUE) while(Boolean.FALSE) ('foo'+'bar').length else 'zonk'");
+		assertEvaluatesTo("zonk", "return if (Boolean.FALSE) while(Boolean.FALSE) ('foo'+'bar').length else 'zonk'");
 	}
 	
 	@Test public void testReturnExpression_09() throws Exception {
@@ -765,75 +765,75 @@ public abstract class AbstractXbaseEvaluationTest extends Assert {
 	}
 
 	@Test public void testLessThanOnIntegers_01() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "3<4");
+		assertEvaluatesTo(Boolean.TRUE, "3<4");
 	}
 
 	@Test public void testLessThanOnIntegers_02() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(false), "4<3");
+		assertEvaluatesTo(Boolean.FALSE, "4<3");
 	}
 
 	@Test public void testGreaterThanOnIntegers_01() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "4>3");
+		assertEvaluatesTo(Boolean.TRUE, "4>3");
 	}
 
 	@Test public void testGreaterThanOnIntegers_02() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(false), "3>4");
+		assertEvaluatesTo(Boolean.FALSE, "3>4");
 	}
 
 	@Test public void testLessEqualsThanOnIntegers_01() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "3<=3");
+		assertEvaluatesTo(Boolean.TRUE, "3<=3");
 	}
 
 	@Test public void testLessEqualsThanOnIntegers_02() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "3<=4");
+		assertEvaluatesTo(Boolean.TRUE, "3<=4");
 	}
 
 	@Test public void testLessEqualsThanOnIntegers_03() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(false), "4<=3");
+		assertEvaluatesTo(Boolean.FALSE, "4<=3");
 	}
 
 	@Test public void testGreaterEqualsThanOnIntegers_01() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "3>=3");
+		assertEvaluatesTo(Boolean.TRUE, "3>=3");
 	}
 
 	@Test public void testGreaterEqualsThanOnIntegers_02() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "4>=3");
+		assertEvaluatesTo(Boolean.TRUE, "4>=3");
 	}
 
 	@Test public void testGreaterEqualsThanOnIntegers_03() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(false), "3>=4");
+		assertEvaluatesTo(Boolean.FALSE, "3>=4");
 	}
 
 	@Test public void testOrOnBooleans_01() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "true||false");
+		assertEvaluatesTo(Boolean.TRUE, "true||false");
 	}
 
 	@Test public void testOrOnBooleans_02() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "false||true");
+		assertEvaluatesTo(Boolean.TRUE, "false||true");
 	}
 
 	@Test public void testOrOnBooleans_03() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "true||true");
+		assertEvaluatesTo(Boolean.TRUE, "true||true");
 	}
 
 	@Test public void testOrOnBooleans_04() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(false), "false||false");
+		assertEvaluatesTo(Boolean.FALSE, "false||false");
 	}
 
 	@Test public void testAndOnBooleans_01() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(true), "true&&true");
+		assertEvaluatesTo(Boolean.TRUE, "true&&true");
 	}
 
 	@Test public void testAndOnBooleans_02() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(false), "false&&true");
+		assertEvaluatesTo(Boolean.FALSE, "false&&true");
 	}
 
 	@Test public void testAndOnBooleans_03() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(false), "true&&false");
+		assertEvaluatesTo(Boolean.FALSE, "true&&false");
 	}
 
 	@Test public void testAndOnBooleans_04() throws Exception {
-		assertEvaluatesTo(Boolean.valueOf(false), "false&&false");
+		assertEvaluatesTo(Boolean.FALSE, "false&&false");
 	}
 
 	@Test public void testNull() throws Exception {
@@ -1447,7 +1447,7 @@ public abstract class AbstractXbaseEvaluationTest extends Assert {
 	 * @since 2.29
 	 */
 	@Test @Ignore public void testTryWithResources_finally() throws Exception {
-		assertEvaluatesTo("[new, body, finally, close]",
+		assertEvaluatesTo("[new, body, close, finally]",
 				"var testdata.ClosableWithList result\n" + 
 				"try (var a = new testdata.ClosableWithList()){\n" + 
 				"	a.add(\"body\")\n" + 
@@ -1462,7 +1462,7 @@ public abstract class AbstractXbaseEvaluationTest extends Assert {
 	 * @since 2.29
 	 */
 	@Test @Ignore public void testTryWithResources_catch() throws Exception {
-		assertEvaluatesTo("[new, catch, close]",
+		assertEvaluatesTo("[new, close, catch]",
 				"val java.util.List<String> result = newArrayList\n" + 
 				"try (val a = new testdata.ClosableWithList(result);\n" + 
 				"		var b = new testdata.ClosableWithListExceptionOnConstr) {\n" + 
@@ -1477,7 +1477,7 @@ public abstract class AbstractXbaseEvaluationTest extends Assert {
 	 * @since 2.29
 	 */
 	@Test @Ignore public void testTryWithResources_catchFinally() throws Exception {
-		assertEvaluatesTo("[new, body, catch b, finally, close]",
+		assertEvaluatesTo("[new, body, close, catch b, finally]",
 				"var testdata.ClosableWithList result\n" + 
 				"try (var a = new testdata.ClosableWithList();\n" + 
 				"		var b = new testdata.ClosableWithListExceptionOnAdd()) {\n" + 
@@ -1534,7 +1534,7 @@ public abstract class AbstractXbaseEvaluationTest extends Assert {
 	 * @since 2.29
 	 */
 	@Test @Ignore public void testTryWithResources_2ResourcesCatch_01() throws Exception {
-		assertEvaluatesTo("[new, catch, close]", //b.add would invoke NullPointerExcpt, but InstExc came first and is caught
+		assertEvaluatesTo("[new, close, catch]", //b.add would invoke NullPointerExcpt, but InstExc came first and is caught
 				"var java.util.List<String> result = newArrayList\n" + 
 				"try (var a = new testdata.ClosableWithList(result);\n" + 
 				"		var b = new testdata.ClosableWithListExceptionOnConstr) {\n" + 

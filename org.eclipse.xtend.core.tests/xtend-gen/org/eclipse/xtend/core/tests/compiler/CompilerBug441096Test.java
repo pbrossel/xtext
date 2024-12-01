@@ -76,6 +76,8 @@ public class CompilerBug441096Test extends AbstractXtendCompilerTest {
     _builder_1.newLine();
     _builder_1.append("import org.eclipse.xtext.xbase.lib.Pure;");
     _builder_1.newLine();
+    _builder_1.append("import org.eclipse.xtext.xbase.lib.XbaseGenerated;");
+    _builder_1.newLine();
     _builder_1.newLine();
     _builder_1.append("@SuppressWarnings(\"all\")");
     _builder_1.newLine();
@@ -123,6 +125,9 @@ public class CompilerBug441096Test extends AbstractXtendCompilerTest {
     _builder_1.append("private final C.I x = new C.I() {");
     _builder_1.newLine();
     _builder_1.append("    ");
+    _builder_1.append("@Override");
+    _builder_1.newLine();
+    _builder_1.append("    ");
     _builder_1.append("public void m() {");
     _builder_1.newLine();
     _builder_1.append("    ");
@@ -131,6 +136,9 @@ public class CompilerBug441096Test extends AbstractXtendCompilerTest {
     _builder_1.append("  ");
     _builder_1.append("};");
     _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("@XbaseGenerated");
     _builder_1.newLine();
     _builder_1.append("  ");
     _builder_1.append("public void m(final Object expr, final Object seq) {");

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, 2016 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -70,6 +70,8 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.newLine();
     _builder_1.append("import org.eclipse.xtext.xbase.lib.IterableExtensions;");
     _builder_1.newLine();
+    _builder_1.append("import org.eclipse.xtext.xbase.lib.XbaseGenerated;");
+    _builder_1.newLine();
     _builder_1.newLine();
     _builder_1.append("@SuppressWarnings(\"all\")");
     _builder_1.newLine();
@@ -84,6 +86,9 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.newLine();
     _builder_1.append("  ");
     _builder_1.append("public static class CustomItr implements Iterable<SOE.A> {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("@Override");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("public Iterator<SOE.A> iterator() {");
@@ -117,6 +122,9 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.append("  ");
     _builder_1.append("}");
     _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("@XbaseGenerated");
     _builder_1.newLine();
     _builder_1.append("  ");
     _builder_1.append("public List<SOE.A> getList(final Object it) {");
@@ -204,6 +212,8 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.newLine();
     _builder_1.append("import org.eclipse.xtext.xbase.lib.IterableExtensions;");
     _builder_1.newLine();
+    _builder_1.append("import org.eclipse.xtext.xbase.lib.XbaseGenerated;");
+    _builder_1.newLine();
     _builder_1.newLine();
     _builder_1.append("@SuppressWarnings(\"all\")");
     _builder_1.newLine();
@@ -211,6 +221,9 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.newLine();
     _builder_1.append("  ");
     _builder_1.append("public static class CustomItr implements Iterable<C> {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("@Override");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("public Iterator<C> iterator() {");
@@ -244,6 +257,9 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.append("  ");
     _builder_1.append("}");
     _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("@XbaseGenerated");
     _builder_1.newLine();
     _builder_1.append("  ");
     _builder_1.append("public List<C> getList(final Object it) {");
@@ -336,6 +352,8 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.newLine();
     _builder_1.append("import org.eclipse.xtext.xbase.lib.IterableExtensions;");
     _builder_1.newLine();
+    _builder_1.append("import org.eclipse.xtext.xbase.lib.XbaseGenerated;");
+    _builder_1.newLine();
     _builder_1.newLine();
     _builder_1.append("@SuppressWarnings(\"all\")");
     _builder_1.newLine();
@@ -350,6 +368,9 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.newLine();
     _builder_1.append("  ");
     _builder_1.append("public static class CustomItr implements Iterable<SOE.A> {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("@Override");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("public Iterator<SOE.A> iterator() {");
@@ -383,6 +404,9 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.append("  ");
     _builder_1.append("}");
     _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("@XbaseGenerated");
     _builder_1.newLine();
     _builder_1.append("  ");
     _builder_1.append("public List<SOE.A> getList(final Object it) {");
@@ -473,6 +497,8 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.newLine();
     _builder_1.append("import org.eclipse.xtext.xbase.lib.IterableExtensions;");
     _builder_1.newLine();
+    _builder_1.append("import org.eclipse.xtext.xbase.lib.XbaseGenerated;");
+    _builder_1.newLine();
     _builder_1.newLine();
     _builder_1.append("@SuppressWarnings(\"all\")");
     _builder_1.newLine();
@@ -487,6 +513,9 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.newLine();
     _builder_1.append("  ");
     _builder_1.append("public static class CustomItr implements Iterable<SOE.A> {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("@Override");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("public Iterator<SOE.A> iterator() {");
@@ -520,6 +549,9 @@ public class CompilerBug470768Test extends AbstractXtendCompilerTest {
     _builder_1.append("  ");
     _builder_1.append("}");
     _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("@XbaseGenerated");
     _builder_1.newLine();
     _builder_1.append("  ");
     _builder_1.append("public List<SOE.A> getList(final Object it) {");

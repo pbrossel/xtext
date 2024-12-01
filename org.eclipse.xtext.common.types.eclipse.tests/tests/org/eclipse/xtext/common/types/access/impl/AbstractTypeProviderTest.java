@@ -85,8 +85,8 @@ import org.eclipse.xtext.common.types.testSetups.Bug347739ThreeTypeParamsSuperSu
 import org.eclipse.xtext.common.types.testSetups.Bug427098;
 import org.eclipse.xtext.common.types.testSetups.Bug428340;
 import org.eclipse.xtext.common.types.testSetups.Bug456328;
-import org.eclipse.xtext.common.types.testSetups.CallableThrowsExceptions;
 import org.eclipse.xtext.common.types.testSetups.Bug470767;
+import org.eclipse.xtext.common.types.testSetups.CallableThrowsExceptions;
 import org.eclipse.xtext.common.types.testSetups.ClassContainingEnum;
 import org.eclipse.xtext.common.types.testSetups.ClassWithVarArgs;
 import org.eclipse.xtext.common.types.testSetups.DeprecatedMembers;
@@ -476,7 +476,13 @@ public abstract class AbstractTypeProviderTest extends Assert {
 		assertEquals(1, type.getSuperTypes().size());
 		JvmParameterizedTypeReference superType = (JvmParameterizedTypeReference) type.getSuperTypes().get(0);
 		assertFalse(superType.getType().eIsProxy());
-		assertEquals("java.util.Collection<E>", superType.getIdentifier());
+		// in Java 21 List extends SequencedCollection
+		// but this test relies on sources so we cannot use stubbed classes
+		// like in xtext.java.tests or common.types.tests
+		// so we remove "Sequenced" from the super type
+		// Lorenzo: that's the best and simplest solution I could find
+		assertEquals("java.util.Collection<E>",
+				superType.getIdentifier().replace("Sequenced", ""));
 		assertEquals(1, type.getTypeParameters().size());
 		JvmType rawType = superType.getType();
 		assertFalse(rawType.eIsProxy());
@@ -1996,34 +2002,17 @@ public abstract class AbstractTypeProviderTest extends Assert {
 	}
 
 	@Test
-	public void testMethods_publicStrictFpMethod_01() {
-		String typeName = Methods.class.getName();
-		JvmGenericType type = (JvmGenericType) getTypeProvider().findTypeByName(typeName);
-		JvmOperation method = getMethodFromType(type, Methods.class, "publicStrictFpMethod()");
-		assertSame(type, method.getDeclaringType());
-		assertFalse(method.isAbstract());
-		assertFalse(method.isFinal());
-		assertFalse(method.isStatic());
-		assertFalse(method.isSynchronized());
-		assertTrue(method.isStrictFloatingPoint());
-		assertFalse(method.isNative());
-		assertEquals(JvmVisibility.PUBLIC, method.getVisibility());
-		JvmType methodType = method.getReturnType().getType();
-		assertEquals("void", methodType.getIdentifier());
-	}
-
-	@Test
 	public void publicNativeMethod() {
 		String typeName = Methods.class.getName();
 		JvmGenericType type = (JvmGenericType) getTypeProvider().findTypeByName(typeName);
-		JvmOperation method = getMethodFromType(type, Methods.class, "publicStrictFpMethod()");
+		JvmOperation method = getMethodFromType(type, Methods.class, "publicNativeMethod()");
 		assertSame(type, method.getDeclaringType());
 		assertFalse(method.isAbstract());
 		assertFalse(method.isFinal());
 		assertFalse(method.isStatic());
 		assertFalse(method.isSynchronized());
-		assertTrue(method.isStrictFloatingPoint());
-		assertFalse(method.isNative());
+		assertFalse(method.isStrictFloatingPoint());
+		assertTrue(method.isNative());
 		assertEquals(JvmVisibility.PUBLIC, method.getVisibility());
 		JvmType methodType = method.getReturnType().getType();
 		assertEquals("void", methodType.getIdentifier());

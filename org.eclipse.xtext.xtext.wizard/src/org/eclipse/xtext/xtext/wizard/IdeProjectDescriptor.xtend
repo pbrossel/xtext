@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2023 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -87,6 +87,7 @@ class IdeProjectDescriptor extends ProjectDescriptor {
 								<version>3.3.0</version>
 								<executions>
 									<execution>
+										<?m2e ignore?>
 										<id>add-source</id>
 										<phase>initialize</phase>
 										<goals>
@@ -139,10 +140,8 @@ class IdeProjectDescriptor extends ProjectDescriptor {
 												<overWriteIfNewer>true</overWriteIfNewer>
 												<excludeTransitive>true</excludeTransitive>
 												<excludeArtifactIds>
-													com.ibm.icu,
-													org.apache.ant,
-													org.apache.commons.lang,
-													org.apache.commons.logging,
+													icu4j,
+													commons-logging,
 													org.eclipse.core.commands,
 													org.eclipse.core.contenttype,
 													org.eclipse.core.expressions,
@@ -214,14 +213,13 @@ class IdeProjectDescriptor extends ProjectDescriptor {
 											<artifactSet>
 												<excludes><!-- avoid duplicate inclusion due to addjars plugin -->
 													<exclude>*:«config.ideProject.name»-org.eclipse.lsp4j*</exclude>
-													<exclude>*:«config.ideProject.name»-org.eclipse.xtext.xbase.lib*</exclude>
-													<exclude>*:«config.ideProject.name»-org.eclipse.xtend.lib*</exclude>
 													<exclude>*:«config.ideProject.name»-com.google.guava*</exclude>
 													<exclude>*:«config.ideProject.name»-asm*</exclude>
 													<exclude>*:«config.ideProject.name»-log4j*</exclude>
 													<exclude>*:«config.ideProject.name»-reload4j*</exclude>
 													<exclude>*:«config.ideProject.name»-org.objectweb.asm*</exclude>
 													<exclude>*:«config.ideProject.name»-org.apache.log4j*</exclude>
+													<exclude>*:*commons-logging*</exclude>
 												</excludes>
 											</artifactSet>
 										«ENDIF»
@@ -229,6 +227,7 @@ class IdeProjectDescriptor extends ProjectDescriptor {
 											<filter>
 												<artifact>*:*</artifact>
 												<excludes>
+													<exclude>**/*.java</exclude>
 													<exclude>META-INF/INDEX.LIST</exclude>
 													<exclude>META-INF/*.SF</exclude>
 													<exclude>META-INF/*.DSA</exclude>

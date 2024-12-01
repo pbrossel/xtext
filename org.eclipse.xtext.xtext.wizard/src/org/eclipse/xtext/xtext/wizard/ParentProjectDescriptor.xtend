@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2023 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -11,7 +11,6 @@ package org.eclipse.xtext.xtext.wizard
 import com.google.common.base.Charsets
 import com.google.common.io.Resources
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-import org.eclipse.xtext.util.JavaVersion
 
 @FinalFieldsConstructor
 class ParentProjectDescriptor extends ProjectDescriptor {
@@ -70,11 +69,7 @@ class ParentProjectDescriptor extends ProjectDescriptor {
 	}
 
 	def String getTychoVersion() {
-		'4.0.7'
-	}
-	
-	def String getTychoVersionJ11() {
-		'2.7.5'
+		'4.0.10'
 	}
 
 	def private CharSequence loadResource(String resourcePath) {
@@ -225,7 +220,7 @@ class ParentProjectDescriptor extends ProjectDescriptor {
 					<maven.compiler.target>«javaVersion»</maven.compiler.target>
 					«IF config.needsTychoBuild»
 						<!-- Tycho settings -->
-						<tycho-version>«IF config.javaVersion.isAtLeast(JavaVersion.JAVA17)»«tychoVersion»«ELSE»«tychoVersionJ11»«ENDIF»</tycho-version>
+						<tycho-version>«tychoVersion»</tycho-version>
 						<!-- Define overridable properties for tycho-surefire-plugin -->
 						<platformSystemProperties></platformSystemProperties>
 						<moduleProperties></moduleProperties>
@@ -388,39 +383,6 @@ class ParentProjectDescriptor extends ProjectDescriptor {
 									<version>3.0.0</version>
 								</plugin>
 							«ENDIF»
-							<plugin>
-								<groupId>org.eclipse.m2e</groupId>
-								<artifactId>lifecycle-mapping</artifactId>
-								<version>1.0.0</version>
-								<configuration>
-									<lifecycleMappingMetadata>
-										<pluginExecutions>
-											<pluginExecution>
-												<pluginExecutionFilter>
-													<groupId>
-														org.codehaus.mojo
-													</groupId>
-													<artifactId>
-														build-helper-maven-plugin
-													</artifactId>
-													<versionRange>
-														[1.9.1,)
-													</versionRange>
-													<goals>
-														<goal>add-resource</goal>
-														<goal>add-source</goal>
-														<goal>add-test-resource</goal>
-														<goal>add-test-source</goal>
-													</goals>
-												</pluginExecutionFilter>
-												<action>
-													<ignore></ignore>
-												</action>
-											</pluginExecution>
-										</pluginExecutions>
-									</lifecycleMappingMetadata>
-								</configuration>
-							</plugin>
 							«IF config.needsTychoBuild»
 								<plugin>
 									<!--

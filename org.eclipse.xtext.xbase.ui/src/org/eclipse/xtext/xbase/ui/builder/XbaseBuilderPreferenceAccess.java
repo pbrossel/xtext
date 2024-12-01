@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2024 itemis AG (http://www.itemis.eu) and others.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
@@ -21,13 +21,21 @@ import com.google.inject.Inject;
 
 /**
  * @author Miro Spoenemann - Initial contribution and API
+ * @author Lorenzo Bettini - useXbaseGenerated
  */
 public class XbaseBuilderPreferenceAccess {
-	
+
 	/**
 	 * Preference identifier for generating <code>@SuppressWarnings</code>.
 	 */
 	public static final String PREF_GENERATE_SUPPRESS_WARNINGS = "generateSuppressWarnings"; //$NON-NLS-1$
+
+	/**
+	 * Preference identifier for generating <code>@XbaseGenerated</code>.
+	 * @since 2.36
+	 */
+	public static final String USE_XBASE_GENERATED = "useXbaseGenerated"; //$NON-NLS-1$
+
 	/**
 	 * Preference identifier for generating <code>@Generated</code>.
 	 */
@@ -59,9 +67,10 @@ public class XbaseBuilderPreferenceAccess {
 		protected void initializeBuilderPreferences(IPreferenceStore store) {
 			super.initializeBuilderPreferences(store);
 			store.setDefault(PREF_GENERATE_SUPPRESS_WARNINGS, true);
+			store.setDefault(USE_XBASE_GENERATED, true);
 			store.setDefault(PREF_GENERATE_GENERATED, false);
 			store.setDefault(PREF_DATE_IN_GENERATED, false);
-			store.setDefault(PREF_JAVA_VERSION, JavaVersion.JAVA5.toString());
+			store.setDefault(PREF_JAVA_VERSION, JavaVersion.JAVA8.toString());
 			store.setDefault(PREF_USE_COMPILER_SOURCE, true);
 		}
 
@@ -73,6 +82,7 @@ public class XbaseBuilderPreferenceAccess {
 	public void loadBuilderPreferences(GeneratorConfig generatorConfig, Object context) {
 		IPreferenceStore preferenceStore = preferenceStoreAccess.getContextPreferenceStore(context);
 		generatorConfig.setGenerateSyntheticSuppressWarnings(preferenceStore.getBoolean(PREF_GENERATE_SUPPRESS_WARNINGS));
+		generatorConfig.setUseXbaseGenerated(preferenceStore.getBoolean(USE_XBASE_GENERATED));
 		generatorConfig.setGenerateGeneratedAnnotation(preferenceStore.getBoolean(PREF_GENERATE_GENERATED));
 		if (generatorConfig.isGenerateGeneratedAnnotation()) {
 			generatorConfig.setIncludeDateInGeneratedAnnotation(preferenceStore.getBoolean(PREF_DATE_IN_GENERATED));
@@ -100,7 +110,7 @@ public class XbaseBuilderPreferenceAccess {
 				// Fall back to default value
 			}
 		}
-		return JavaVersion.JAVA5;
+		return JavaVersion.JAVA8;
 	}
 	
 	public void setJavaVersion(Object context, JavaVersion version) {
@@ -112,7 +122,7 @@ public class XbaseBuilderPreferenceAccess {
 	public JavaVersion fromCompilerSourceLevel(String compilerSource) {
 		JavaVersion javaVersion = JavaVersion.fromQualifier(compilerSource);
 		if (javaVersion == null)
-			javaVersion = JavaVersion.JAVA5;
+			javaVersion = JavaVersion.JAVA8;
 		return javaVersion;
 	}
 

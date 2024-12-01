@@ -21,14 +21,15 @@ public class JavaVersionExtendedTest {
 
 	@Test
 	public void testToJdtClassFileConstant() {
-		assertEquals(ClassFileConstants.JDK1_5, JavaVersion.JAVA5.toJdtClassFileConstant());
-		assertEquals(ClassFileConstants.JDK1_6, JavaVersion.JAVA6.toJdtClassFileConstant());
-		assertEquals(ClassFileConstants.JDK1_7, JavaVersion.JAVA7.toJdtClassFileConstant());
 		assertEquals(ClassFileConstants.JDK1_8, JavaVersion.JAVA8.toJdtClassFileConstant());
 		assertEquals(ClassFileConstants.JDK9, JavaVersion.JAVA9.toJdtClassFileConstant());
 		assertEquals(ClassFileConstants.JDK10, JavaVersion.JAVA10.toJdtClassFileConstant());
 		assertEquals(ClassFileConstants.JDK11, JavaVersion.JAVA11.toJdtClassFileConstant());
 		assertEquals(ClassFileConstants.JDK17, JavaVersion.JAVA17.toJdtClassFileConstant());
+		// until we use the newer JDT as minimal requirement, we cannot refer to ClassFileConstants.JDK21
+		// or the test won't compile with older target platforms
+		// assertEquals(ClassFileConstants.JDK21, JavaVersion.JAVA21.toJdtClassFileConstant());
+		assertEquals(4259840, JavaVersion.JAVA21.toJdtClassFileConstant());
 //		try {
 //			long value = ClassFileConstants.class.getField("JDK17").getLong(null);
 //			assertEquals(value, JavaVersion.JAVA17.toJdtClassFileConstant());
@@ -36,6 +37,14 @@ public class JavaVersionExtendedTest {
 //			System.err.println("ooops");
 //			// ok
 //		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testSpoofedClassFileConstant() {
+		assertEquals(ClassFileConstants.JDK1_8, JavaVersion.JAVA5.toJdtClassFileConstant());
+		assertEquals(ClassFileConstants.JDK1_8, JavaVersion.JAVA6.toJdtClassFileConstant());
+		assertEquals(ClassFileConstants.JDK1_8, JavaVersion.JAVA7.toJdtClassFileConstant());
 	}
 
 }

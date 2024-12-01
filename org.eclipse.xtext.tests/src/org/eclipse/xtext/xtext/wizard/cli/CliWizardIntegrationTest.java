@@ -139,7 +139,7 @@ public class CliWizardIntegrationTest {
 				project.getIdeProject().setEnabled(true);
 				project.getWebProject().setEnabled(true);
 			}), CliWizardIntegrationTest.newProjectConfig(project -> {
-				project.setBaseName("mavenTychoJ17");
+				project.setBaseName("mavenTychoJUnit5");
 				project.setPreferredBuildSystem(BuildSystem.MAVEN);
 				project.setSourceLayout(SourceLayout.PLAIN);
 				project.setProjectLayout(ProjectLayout.HIERARCHICAL);
@@ -148,7 +148,6 @@ public class CliWizardIntegrationTest {
 				project.getUiProject().getTestProject().setEnabled(true);
 				project.getIdeProject().setEnabled(true);
 				project.getWebProject().setEnabled(true);
-				project.setJavaVersion(JavaVersion.JAVA17);
 				project.setJunitVersion(JUnitVersion.JUNIT_5);
 			}), CliWizardIntegrationTest.newProjectConfig(project -> {
 				project.setBaseName("gradle");
@@ -190,8 +189,8 @@ public class CliWizardIntegrationTest {
 				project.getWebProject().setEnabled(true);
 				project.getP2Project().setEnabled(true);
 			}), CliWizardIntegrationTest.newProjectConfig(project -> {
-				project.setBaseName("mavenTychoP2J17");
-				project.setJavaVersion(JavaVersion.JAVA17);
+				project.setBaseName("mavenTychoP2J21");
+				project.setJavaVersion(JavaVersion.JAVA21);
 				project.setPreferredBuildSystem(BuildSystem.MAVEN);
 				project.setSourceLayout(SourceLayout.PLAIN);
 				project.setProjectLayout(ProjectLayout.HIERARCHICAL);

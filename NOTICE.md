@@ -26,8 +26,8 @@ SPDX-License-Identifier: EPL-2.0
 
 The project maintains the following source code repositories:
 
-* https://github.com/eclipse/xtext
-* https://github.com/eclipse/xtext-website
+* https://github.com/eclipse-xtext/xtext
+* https://github.com/eclipse-xtext/xtext-website
 
 ## Third-party Content
 
@@ -56,11 +56,11 @@ args4j (2.33)
 
 * License: MIT License
 
-ASM (9.7)
+ASM (9.7.x)
 
 * License: BSD-3-Clause
 
-classgraph (4.8.172)
+classgraph (4.8.x)
 
 * License: MIT
 * Project: https://github.com/classgraph/classgraph
@@ -70,7 +70,7 @@ Google Gson (2.9.x)
 
 * License: Apache License, 2.0
 
-Google Guava (33.1.0)
+Google Guava (33.3.x)
 
 * License: Apache License 2.0
 
@@ -82,7 +82,7 @@ Gradle Wrapper (8)
 
 * License: Apache License, 2.0
 
-guava gwt (33.1.0)
+guava gwt (33.3.x)
 
 * License: Apache License, 2.0
 

@@ -80,7 +80,7 @@ class RuntimeProjectDescriptor extends TestedProjectDescriptor {
 		deps += new ExternalDependency => [
 			p2 [
 				bundleId = "org.eclipse.equinox.common"
-				version = "3.16.0"
+				version = "3.19.0"
 			]
 		]
 		if (!isEclipsePluginProject && config.needsMavenBuild) {
@@ -105,16 +105,7 @@ class RuntimeProjectDescriptor extends TestedProjectDescriptor {
 	
 	override getDevelopmentBundles() {
 		val result = newLinkedHashSet(
-			"org.eclipse.xtext.xbase", 
-			"org.eclipse.xtext.common.types", 
-			"org.eclipse.xtext.xtext.generator",
-			"org.eclipse.emf.codegen.ecore", 
-			"org.eclipse.emf.mwe.utils",
-			"org.eclipse.emf.mwe2.launch",
-			"org.eclipse.emf.mwe2.lib",
-			"org.objectweb.asm",
-			"org.apache.commons.logging", 
-			"org.apache.log4j"
+			"org.eclipse.xtext.xtext.generator.dependencies"
 		)
 		if (isFromExistingEcoreModels) {
 			if (config.ecore2Xtext.EPackageInfos.exists[genmodelURI.fileExtension == "xcore"]) {
@@ -262,6 +253,10 @@ class RuntimeProjectDescriptor extends TestedProjectDescriptor {
 						}
 						validator = {
 							// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+			
+							// Enables several checks on the inferred Jvm model for Xbase languages concerning Java inheritance relations
+							// composedCheck = "org.eclipse.xtext.xbase.validation.JvmGenericTypeValidator"
+			
 							// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage
 							generateDeprecationValidation = true
 						}
@@ -343,6 +338,7 @@ class RuntimeProjectDescriptor extends TestedProjectDescriptor {
 							<version>3.0.0</version>
 							<executions>
 								<execution>
+									<?m2e ignore?>
 									<id>mwe2Launcher</id>
 									<phase>generate-sources</phase>
 									<goals>
@@ -414,6 +410,7 @@ class RuntimeProjectDescriptor extends TestedProjectDescriptor {
 								<version>3.3.0</version>
 								<executions>
 									<execution>
+										<?m2e ignore?>
 										<id>add-source</id>
 										<phase>initialize</phase>
 										<goals>
@@ -483,40 +480,6 @@ class RuntimeProjectDescriptor extends TestedProjectDescriptor {
 							«ENDIF»
 						«ENDIF»
 					</plugins>
-					<pluginManagement>
-						<plugins>
-							<plugin>
-								<groupId>org.eclipse.m2e</groupId>
-								<artifactId>lifecycle-mapping</artifactId>
-								<version>1.0.0</version>
-								<configuration>
-									<lifecycleMappingMetadata>
-										<pluginExecutions>
-											<pluginExecution>
-												<pluginExecutionFilter>
-													<groupId>
-														org.codehaus.mojo
-													</groupId>
-													<artifactId>
-														exec-maven-plugin
-													</artifactId>
-													<versionRange>
-														[1.2.1,)
-													</versionRange>
-													<goals>
-														<goal>java</goal>
-													</goals>
-												</pluginExecutionFilter>
-												<action>
-													<ignore></ignore>
-												</action>
-											</pluginExecution>
-										</pluginExecutions>
-									</lifecycleMappingMetadata>
-								</configuration>
-							</plugin>
-						</plugins>
-					</pluginManagement>
 				</build>
 			'''
 		]

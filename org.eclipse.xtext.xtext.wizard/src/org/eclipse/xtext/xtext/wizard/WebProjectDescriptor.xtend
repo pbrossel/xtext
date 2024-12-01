@@ -15,10 +15,10 @@ import static org.eclipse.xtext.xtext.wizard.ExternalDependency.*
 @FinalFieldsConstructor
 class WebProjectDescriptor extends ProjectDescriptor {
 	
-	static val REQUIREJS_VERSION = '2.3.6'
+	static val REQUIREJS_VERSION = '2.3.7'
 //	static val REQUIREJS_TEXT_VERSION = '2.0.15'
 	static val JQUERY_VERSION = '3.6.0'
-	static val JETTY_VERSION = '11.0.20'
+	static val JETTY_VERSION = '11.0.23'
 	static val SLF4J_VERSION = '2.0.5'
 	static val ACE_VERSION = '1.3.3'
 	
@@ -122,6 +122,7 @@ class WebProjectDescriptor extends ProjectDescriptor {
 							<version>3.3.0</version>
 							<executions>
 								<execution>
+									<?m2e ignore?>
 									<id>add-source</id>
 									<phase>initialize</phase>
 									<goals>

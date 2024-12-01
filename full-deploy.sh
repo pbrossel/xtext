@@ -11,13 +11,13 @@ while [ "$1" != "" ]; do
   VALUE=`echo $1 | awk -F= '{print $2}'`
   case $PARAM in
     -h | --help)
-      echo "Perform Maven build for xtext-xtend"
+      echo "Perform Maven and p2 deployment for Xtext"
       echo ""
-      echo "./1-maven-build.sh"
+      echo "./full-deploy.sh"
       echo -e "\t-h --help"
       echo -e "\t--no-tests Skip test execution"
       echo -e "\t--local-repository=<PATH> Use local Maven repository"
-      echo -e "\t--tp=$TARGET_PLATFORM (valid values: r202203,r202206,...,latest)"
+      echo -e "\t--tp=$TARGET_PLATFORM (valid values: r2024-03,r2024-06,...,latest)"
       echo ""
       exit
       ;;

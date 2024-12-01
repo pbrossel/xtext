@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
@@ -22,8 +23,12 @@ import org.apache.maven.it.Verifier;
 import org.apache.maven.it.util.ResourceExtractor;
 import org.apache.maven.shared.utils.cli.CommandLineUtils;
 import org.apache.maven.shared.utils.io.FileUtils;
+import org.eclipse.xtext.generator.trace.AbstractTraceRegion;
+import org.eclipse.xtext.generator.trace.TraceRegionSerializer;
 import org.eclipse.xtext.maven.trace.ClassFileDebugSourceExtractor;
+import org.eclipse.xtext.util.JavaRuntimeVersion;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -235,6 +240,15 @@ public class XtextGeneratorIT {
 	}
 
 	@Test
+	public void javaLang21BiRef() throws Exception {
+		Assume.assumeTrue("Active only on Java 21 and later", JavaRuntimeVersion.isJava21OrLater());
+		Verifier verifier = verifyErrorFreeLog("java-lang-21-bi-ref");
+		verifier.verifyFilePresent(verifier.getBasedir() + "/src-gen/XbaseReferToJava.java");
+		verifier.verifyFilePresent(verifier.getBasedir() + "/target/xtext-temp/stub-classes/XbaseReferToJava.class");
+		verifier.verifyFilePresent(verifier.getBasedir() + "/target/xtext-temp/stub-classes/JavaRecord.class");
+	}
+
+	@Test
 	public void aggregation() throws Exception {
 		Verifier verifier = verifyErrorFreeLog("aggregate");
 		verifier.verifyFilePresent(verifier.getBasedir() + "/purexbase/src-gen/IntegrationTestXbase.java");
@@ -280,9 +294,30 @@ public class XtextGeneratorIT {
 		assertTraceSourceFileName(expectedSourceName, classFile);
 	}
 
+	@Test
+	public void locationInTraceFileIsRelative_issue_2957() throws Exception {
+		Verifier verifier = verifyErrorFreeLog("trace-issue-2957");
+		assertRelativeLocationInTraceFile("foo/bar/IntegrationTestXbase.xbase",
+				verifier.getBasedir() + "/src-gen/.IntegrationTestXbase.java._trace");
+		assertRelativeLocationInTraceFile("com/acme/OtherIntegrationTestXbase.xbase",
+				verifier.getBasedir() + "/other-gen/.OtherIntegrationTestXbase.java._trace");
+	}
+
 	private void assertTraceSourceFileName(String expectedSourceName, File file) throws IOException {
 		String sourceName = new ClassFileDebugSourceExtractor().getDebugSourceFileName(file);
 		assertEquals("Source file name doesn't match", expectedSourceName, sourceName);
+	}
+
+	private void assertRelativeLocationInTraceFile(String expectedLocation, String traceFile1Path) throws IOException {
+		String source = loadTraceSourcePath(traceFile1Path);
+		assertEquals(expectedLocation, source);
+	}
+
+	private String loadTraceSourcePath(String traceFile1Path) throws IOException {
+		try (FileInputStream in = new FileInputStream(traceFile1Path)) {
+			AbstractTraceRegion region = new TraceRegionSerializer().readTraceRegionFrom(in);
+			return region.getAssociatedSrcRelativePath().toString();
+		}
 	}
 
 	private Verifier verifyErrorFreeLog(String pathToTestProject) throws IOException, VerificationException {
