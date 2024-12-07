@@ -108,7 +108,7 @@ public class TargetPlatformProject extends ProjectDescriptor {
     _builder.append("<unit id=\"org.eclipse.emf.sdk.feature.group\" version=\"0.0.0\"/>");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("<repository location=\"https://download.eclipse.org/releases/2024-12\"/>");
+    _builder.append("<repository location=\"https://download.eclipse.org/releases/2025-03\"/>");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("</location>");
@@ -247,7 +247,7 @@ public class TargetPlatformProject extends ProjectDescriptor {
     _builder.append("<unit id=\"io.github.classgraph.classgraph\" version=\"0.0.0\"/>");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("<repository location=\"https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-12\"/>");
+    _builder.append("<repository location=\"https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025-03\"/>");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("</location>");
